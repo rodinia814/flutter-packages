@@ -10,6 +10,7 @@
 #import "FLTGoogleMapHeatmapController.h"
 #import "FLTGoogleMapJSONConversions.h"
 #import "FLTGoogleMapTileOverlayController.h"
+#import "GoogleMapGroundOverlayController.h"
 #import "messages.g.h"
 
 #pragma mark - Conversion of JSON-like values sent via platform channels. Forward declarations.
@@ -138,6 +139,7 @@
 @property(nonatomic, strong) FGMMapCallHandler *callHandler;
 // The inspector API implementation, separate to avoid lifetime extension.
 @property(nonatomic, strong) FGMMapInspector *inspector;
+@property(nonatomic, strong) FLTGroundOverlaysController *groundOverlaysController;
 
 @end
 
@@ -204,6 +206,9 @@
         [[FLTTileOverlaysController alloc] initWithMapView:_mapView
                                            callbackHandler:_dartCallbackHandler
                                                  registrar:registrar];
+    _groundOverlaysController = [[FLTGroundOverlaysController alloc] init:_channel
+                                                              mapView:_mapView
+                                                            registrar:registrar];
     [_clusterManagersController addClusterManagers:creationParameters.initialClusterManagers];
     [_markersController addMarkers:creationParameters.initialMarkers];
     [_polygonsController addPolygons:creationParameters.initialPolygons];
@@ -211,6 +216,7 @@
     [_circlesController addCircles:creationParameters.initialCircles];
     [_heatmapsController addHeatmaps:creationParameters.initialHeatmaps];
     [_tileOverlaysController addTileOverlays:creationParameters.initialTileOverlays];
+    [_groundOverlaysController addGroundOverlays:creationParameters.initialGroundOverlays];
 
     // Invoke clustering after markers are added.
     [_clusterManagersController invokeClusteringForEachClusterManager];

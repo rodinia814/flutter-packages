@@ -34,6 +34,8 @@ export 'package:google_maps_flutter_platform_interface/google_maps_flutter_platf
         HeatmapGradientColor,
         HeatmapId,
         HeatmapRadius,
+        GroundOverlay,
+        GroundOverlayId,
         InfoWindow,
         JointType,
         LatLng,

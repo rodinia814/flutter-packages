@@ -9,7 +9,7 @@ import 'google_maps_flutter_ios.dart';
 import 'messages.g.dart';
 import 'serialization.dart';
 
-/// An Android of implementation of [GoogleMapsInspectorPlatform].
+/// An iOS implementation of [GoogleMapsInspectorPlatform].
 @visibleForTesting
 class GoogleMapsInspectorIOS extends GoogleMapsInspectorPlatform {
   /// Creates an inspector API instance for a given map ID from

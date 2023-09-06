@@ -113,6 +113,15 @@ class FakeGoogleMapsFlutterPlatform extends GoogleMapsFlutterPlatform {
   }
 
   @override
+  Future<void> updateGroundOverlays(
+      GroundOverlayUpdates groundOverlayUpdates, {
+        required int mapId,
+      }) async {
+    mapInstances[mapId]?.groundOverlayUpdates.add(groundOverlayUpdates);
+    await _fakeDelay();
+  }
+
+  @override
   Future<void> clearTileCache(
     TileOverlayId tileOverlayId, {
     required int mapId,
@@ -247,6 +256,11 @@ class FakeGoogleMapsFlutterPlatform extends GoogleMapsFlutterPlatform {
   @override
   Stream<CircleTapEvent> onCircleTap({required int mapId}) {
     return mapEventStreamController.stream.whereType<CircleTapEvent>();
+  }
+
+  @override
+  Stream<GroundOverlayTapEvent> onGroundOverlayTap({required int mapId}) {
+    return mapEventStreamController.stream.whereType<GroundOverlayTapEvent>();
   }
 
   @override

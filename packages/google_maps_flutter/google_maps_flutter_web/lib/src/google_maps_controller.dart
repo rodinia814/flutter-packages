@@ -32,6 +32,7 @@ class GoogleMapController {
         _clusterManagers = mapObjects.clusterManagers,
         _heatmaps = mapObjects.heatmaps,
         _tileOverlays = mapObjects.tileOverlays,
+        _groundOverlays = mapObjects.groundOverlays,
         _lastMapConfiguration = mapConfiguration {
     _circlesController = CirclesController(stream: _streamController);
     _heatmapsController = HeatmapsController();
@@ -44,6 +45,7 @@ class GoogleMapController {
         clusterManagersController: _clusterManagersController!);
     _tileOverlaysController = TileOverlaysController();
     _updateStylesFromConfiguration(mapConfiguration);
+    _groundOverlaysController = GroundOverlaysController();
 
     // Register the view factory that will hold the `_div` that holds the map in the DOM.
     // The `_div` needs to be created outside of the ViewFactory (and cached!) so we can
@@ -70,6 +72,7 @@ class GoogleMapController {
   final Set<ClusterManager> _clusterManagers;
   final Set<Heatmap> _heatmaps;
   Set<TileOverlay> _tileOverlays;
+  final Set<GroundOverlay> _groundOverlays;
 
   // The configuration passed by the user, before converting to gmaps.
   // Caching this allows us to re-create the map faithfully when needed.
@@ -131,6 +134,7 @@ class GoogleMapController {
   MarkersController? _markersController;
   ClusterManagersController? _clusterManagersController;
   TileOverlaysController? _tileOverlaysController;
+  GroundOverlaysController? _groundOverlaysController;
 
   // Keeps track if _attachGeometryControllers has been called or not.
   bool _controllersBoundToMap = false;
@@ -165,6 +169,7 @@ class GoogleMapController {
     _polylinesController = polylines ?? _polylinesController;
     _clusterManagersController = clusterManagers ?? _clusterManagersController;
     _tileOverlaysController = tileOverlays ?? _tileOverlaysController;
+    _groundOverlaysController = groundOverlays ?? _groundOverlaysController;
   }
 
   DebugCreateMapFunction? _overrideCreateMap;
@@ -282,6 +287,8 @@ class GoogleMapController {
         'Cannot attach a map to a null ClusterManagersController instance.');
     assert(_tileOverlaysController != null,
         'Cannot attach a map to a null TileOverlaysController instance.');
+    assert(_groundOverlaysController != null,
+        'Cannot attach a map to a null GroundOverlaysController instance.');
 
     _circlesController!.bindToMap(_mapId, map);
     _heatmapsController!.bindToMap(_mapId, map);
@@ -290,6 +297,7 @@ class GoogleMapController {
     _markersController!.bindToMap(_mapId, map);
     _clusterManagersController!.bindToMap(_mapId, map);
     _tileOverlaysController!.bindToMap(_mapId, map);
+    _groundOverlaysController!.bindToMap(_mapId, map);
 
     _controllersBoundToMap = true;
   }
@@ -315,6 +323,7 @@ class GoogleMapController {
     _polygonsController!.addPolygons(_polygons);
     _polylinesController!.addPolylines(_polylines);
     _tileOverlaysController!.addTileOverlays(_tileOverlays);
+    _groundOverlaysController!.addTileOverlays(_groundOverlays);
   }
 
   // Merges new options coming from the plugin into _lastConfiguration.
@@ -519,6 +528,20 @@ class GoogleMapController {
     _tileOverlaysController
         ?.removeTileOverlays(updates.objectIdsToRemove.cast<TileOverlayId>());
     _tileOverlays = newOverlays;
+  }
+
+  /// Updates the set of [GroundOverlay]s.
+  void updateGroundOverlays(Set<GroundOverlay> newOverlays) {
+    final MapsObjectUpdates<GroundOverlay> updates =
+        MapsObjectUpdates<GroundOverlay>.from(_groundOverlays, newOverlays,
+            objectName: 'groundOverlay');
+    assert(_groundOverlaysController != null,
+        'Cannot update ground overlays after dispose().');
+    _groundOverlaysController?.addGroundOverlays(updates.objectsToAdd);
+    _groundOverlaysController?.changeGroundOverlays(updates.objectsToChange);
+    _groundOverlaysController
+        ?.removeGroundOverlays(updates.objectIdsToRemove.cast<GroundOverlayId>());
+    _groundOverlays = newOverlays;
   }
 
   /// Clears the tile cache associated with the given [TileOverlayId].

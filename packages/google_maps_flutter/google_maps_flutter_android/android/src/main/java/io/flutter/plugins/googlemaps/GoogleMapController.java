@@ -38,6 +38,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.Polygon;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.TileOverlay;
+import com.google.android.gms.maps.model.GroundOverlay;
 import com.google.maps.android.clustering.Cluster;
 import com.google.maps.android.clustering.ClusterManager;
 import com.google.maps.android.collections.MarkerManager;
@@ -93,6 +94,7 @@ class GoogleMapController
   private final CirclesController circlesController;
   private final HeatmapsController heatmapsController;
   private final TileOverlaysController tileOverlaysController;
+  private final GroundOverlaysController groundOverlaysController;
   private MarkerManager markerManager;
   private MarkerManager.Collection markerCollection;
   private @Nullable List<Messages.PlatformMarker> initialMarkers;
@@ -102,6 +104,7 @@ class GoogleMapController
   private @Nullable List<Messages.PlatformCircle> initialCircles;
   private @Nullable List<Messages.PlatformHeatmap> initialHeatmaps;
   private @Nullable List<Messages.PlatformTileOverlay> initialTileOverlays;
+  private @Nullable List<Messages.PlatformGroundOverlay> initialGroundOverlays;
   // Null except between initialization and onMapReady.
   private @Nullable String initialMapStyle;
   private boolean lastSetStyleSucceeded;
@@ -154,7 +157,8 @@ class GoogleMapController
       PolylinesController polylinesController,
       CirclesController circlesController,
       HeatmapsController heatmapController,
-      TileOverlaysController tileOverlaysController) {
+      TileOverlaysController tileOverlaysController,
+      GroundOverlaysController groundOverlaysController) {
     this.id = id;
     this.context = context;
     this.binaryMessenger = binaryMessenger;
@@ -170,6 +174,7 @@ class GoogleMapController
     this.circlesController = circlesController;
     this.heatmapsController = heatmapController;
     this.tileOverlaysController = tileOverlaysController;
+    this.groundOverlaysController = groundOverlaysController;
   }
 
   @Override
@@ -209,6 +214,7 @@ class GoogleMapController
     circlesController.setGoogleMap(googleMap);
     heatmapsController.setGoogleMap(googleMap);
     tileOverlaysController.setGoogleMap(googleMap);
+    groundOverlaysController.setGoogleMap(googleMap);
     setMarkerCollectionListener(this);
     setClusterItemClickListener(this);
     setClusterItemRenderedListener(this);
@@ -219,6 +225,7 @@ class GoogleMapController
     updateInitialCircles();
     updateInitialHeatmaps();
     updateInitialTileOverlays();
+    updateInitialGroundOverlays();
     if (initialPadding != null && initialPadding.size() == 4) {
       setPadding(
           initialPadding.get(0),
@@ -370,6 +377,11 @@ class GoogleMapController
   }
 
   @Override
+  public void onGroundOverlayClick(GroundOverlay groundOverlay) {
+    groundOverlaysController.onGroundOverlayTap(groundOverlay.getId());
+  }
+
+  @Override
   public void dispose() {
     if (disposed) {
       return;
@@ -399,6 +411,7 @@ class GoogleMapController
     googleMap.setOnPolygonClickListener(listener);
     googleMap.setOnPolylineClickListener(listener);
     googleMap.setOnCircleClickListener(listener);
+    googleMap.setOnGroundOverlayClickListener(listener);
     googleMap.setOnMapClickListener(listener);
     googleMap.setOnMapLongClickListener(listener);
   }
@@ -725,6 +738,19 @@ class GoogleMapController
     if (initialTileOverlays != null) {
       tileOverlaysController.addTileOverlays(initialTileOverlays);
     }
+  }
+
+  @Override
+  public void setInitialGroundOverlays(Object initialGroundOverlays) {
+    ArrayList<?> groundOverlays = (ArrayList<?>) initialGroundOverlays;
+    this.initialGroundOverlays = groundOverlays != null ? new ArrayList<>(groundOverlays) : null;
+    if (googleMap != null) {
+      updateInitialGroundOverlays();
+    }
+  }
+
+  private void updateInitialGroundOverlays() {
+    groundOverlaysController.addGroundOverlays(initialGroundOverlays);
   }
 
   @SuppressLint("MissingPermission")

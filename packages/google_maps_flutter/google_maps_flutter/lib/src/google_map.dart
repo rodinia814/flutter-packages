@@ -122,6 +122,7 @@ class GoogleMap extends StatefulWidget {
     this.circles = const <Circle>{},
     this.clusterManagers = const <ClusterManager>{},
     this.heatmaps = const <Heatmap>{},
+    this.groundOverlays = const <GroundOverlay>{},
     this.onCameraMoveStarted,
     this.tileOverlays = const <TileOverlay>{},
     this.onCameraMove,
@@ -224,6 +225,9 @@ class GoogleMap extends StatefulWidget {
 
   /// Cluster Managers to be initialized for the map.
   final Set<ClusterManager> clusterManagers;
+
+  /// Ground overlays to be placed on the map.
+  final Set<GroundOverlay> groundOverlays;
 
   /// Called when the camera starts moving.
   ///
@@ -339,7 +343,8 @@ class _GoogleMapState extends State<GoogleMap> {
   Map<ClusterManagerId, ClusterManager> _clusterManagers =
       <ClusterManagerId, ClusterManager>{};
   Map<HeatmapId, Heatmap> _heatmaps = <HeatmapId, Heatmap>{};
-  late MapConfiguration _mapConfiguration;
+  Map<GroundOverlayId, GroundOverlay> _groundOverlays =
+  <GroundOverlayId, GroundOverlay>{};  late MapConfiguration _mapConfiguration;
 
   @override
   Widget build(BuildContext context) {
@@ -360,6 +365,7 @@ class _GoogleMapState extends State<GoogleMap> {
         circles: widget.circles,
         clusterManagers: widget.clusterManagers,
         heatmaps: widget.heatmaps,
+        groundOverlays: widget.groundOverlays,
       ),
       mapConfiguration: _mapConfiguration,
     );
@@ -375,6 +381,7 @@ class _GoogleMapState extends State<GoogleMap> {
     _polylines = keyByPolylineId(widget.polylines);
     _circles = keyByCircleId(widget.circles);
     _heatmaps = keyByHeatmapId(widget.heatmaps);
+    _groundOverlays = keyByGroundOverlayId(widget.groundOverlays);
   }
 
   @override
@@ -399,6 +406,7 @@ class _GoogleMapState extends State<GoogleMap> {
     _updateCircles();
     _updateHeatmaps();
     _updateTileOverlays();
+    _updateGroundOverlays();
   }
 
   Future<void> _updateOptions() async {
@@ -460,6 +468,14 @@ class _GoogleMapState extends State<GoogleMap> {
   Future<void> _updateTileOverlays() async {
     final GoogleMapController controller = await _controller.future;
     unawaited(controller._updateTileOverlays(widget.tileOverlays));
+  }
+
+  Future<void> _updateGroundOverlays() async {
+    final GoogleMapController controller = await _controller.future;
+    // ignore: unawaited_futures
+    unawaited(controller._updateGroundOverlays(GroundOverlayUpdates.from(
+        _groundOverlays.values.toSet(), widget.groundOverlays)));
+    _groundOverlays = keyByGroundOverlayId(widget.groundOverlays);
   }
 
   Future<void> onPlatformViewCreated(int id) async {
@@ -548,6 +564,18 @@ class _GoogleMapState extends State<GoogleMap> {
       throw UnknownMapObjectIdError('marker', circleId, 'onTap');
     }
     final VoidCallback? onTap = circle.onTap;
+    if (onTap != null) {
+      onTap();
+    }
+  }
+
+  void onGroundOverlayTap(GroundOverlayId groundOverlayId) {
+    assert(groundOverlayId != null);
+    final GroundOverlay? groundOverlay = _groundOverlays[groundOverlayId];
+    if (groundOverlay == null) {
+      throw UnknownMapObjectIdError('groundOverlay', groundOverlayId, 'onTap');
+    }
+    final VoidCallback? onTap = groundOverlay.onTap;
     if (onTap != null) {
       onTap();
     }

@@ -62,5 +62,7 @@ interface GoogleMapOptionsSink {
 
   void setInitialTileOverlays(@NonNull List<Messages.PlatformTileOverlay> initialTileOverlays);
 
+  void setInitialGroundOverlays(Object initialGroundOverlays);
+
   void setMapStyle(@Nullable String style);
 }

@@ -145,6 +145,7 @@ class BuildViewGoogleMapsFlutterPlatform extends GoogleMapsFlutterPlatform {
     Set<Circle> circles = const <Circle>{},
     Set<TileOverlay> tileOverlays = const <TileOverlay>{},
     Set<ClusterManager> clusterManagers = const <ClusterManager>{},
+    Set<GroundOverlay> groundOverlays = const <GroundOverlay>{},
     Set<Factory<OneSequenceGestureRecognizer>>? gestureRecognizers =
         const <Factory<OneSequenceGestureRecognizer>>{},
     Map<String, dynamic> mapOptions = const <String, dynamic>{},

@@ -205,6 +205,11 @@ class GoogleMapsFlutterAndroid extends GoogleMapsFlutterPlatform {
   }
 
   @override
+  Stream<GroundOverlayTapEvent> onGroundOverlayTap({required int mapId}) {
+    return _events(mapId).whereType<GroundOverlayTapEvent>();
+  }
+
+  @override
   Stream<MapTapEvent> onTap({required int mapId}) {
     return _events(mapId).whereType<MapTapEvent>();
   }
@@ -345,6 +350,17 @@ class GoogleMapsFlutterAndroid extends GoogleMapsFlutterPlatform {
       clusterManagerUpdates.clusterManagerIdsToRemove
           .map((ClusterManagerId id) => id.value)
           .toList(),
+    );
+  }
+
+  @override
+  Future<void> updateGroundOverlays(
+   GroundOverlayUpdates groundOverlayUpdates, {
+    required int mapId,
+  }) {
+    return _channel(mapId).invokeMethod<void>(
+      'groundOverlays#update',
+      groundOverlayUpdates.toJson(),
     );
   }
 
@@ -606,6 +622,7 @@ class GoogleMapsFlutterAndroid extends GoogleMapsFlutterPlatform {
     Set<Circle> circles = const <Circle>{},
     Set<TileOverlay> tileOverlays = const <TileOverlay>{},
     Set<ClusterManager> clusterManagers = const <ClusterManager>{},
+    Set<GroundOverlay> groundOverlays = const <GroundOverlay>{},
     Set<Factory<OneSequenceGestureRecognizer>>? gestureRecognizers,
     Map<String, dynamic> mapOptions = const <String, dynamic>{},
   }) {
@@ -623,6 +640,9 @@ class GoogleMapsFlutterAndroid extends GoogleMapsFlutterPlatform {
           clusterManagers: clusterManagers,
           tileOverlays: tileOverlays),
       mapConfiguration: _platformMapConfigurationFromOptionsJson(mapOptions),
+          tileOverlays: tileOverlays,
+          groundOverlays: groundOverlays),
+      mapOptions: mapOptions,
     );
   }
 
@@ -637,6 +657,7 @@ class GoogleMapsFlutterAndroid extends GoogleMapsFlutterPlatform {
     Set<Circle> circles = const <Circle>{},
     Set<TileOverlay> tileOverlays = const <TileOverlay>{},
     Set<ClusterManager> clusterManagers = const <ClusterManager>{},
+    Set<GroundOverlay> groundOverlays = const <GroundOverlay>{},
     Set<Factory<OneSequenceGestureRecognizer>>? gestureRecognizers,
     Map<String, dynamic> mapOptions = const <String, dynamic>{},
   }) {
@@ -651,6 +672,7 @@ class GoogleMapsFlutterAndroid extends GoogleMapsFlutterPlatform {
       circles: circles,
       tileOverlays: tileOverlays,
       clusterManagers: clusterManagers,
+      groundOverlays: groundOverlays,
       gestureRecognizers: gestureRecognizers,
       mapOptions: mapOptions,
     );

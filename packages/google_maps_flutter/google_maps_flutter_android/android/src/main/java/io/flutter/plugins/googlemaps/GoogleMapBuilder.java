@@ -1,4 +1,4 @@
-// Copyright 2013 The Flutter Authors. All rights reserved.
+// Copyright 2018 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
@@ -29,16 +29,17 @@ class GoogleMapBuilder implements GoogleMapOptionsSink {
   private List<Messages.PlatformCircle> initialCircles;
   private List<Messages.PlatformHeatmap> initialHeatmaps;
   private List<Messages.PlatformTileOverlay> initialTileOverlays;
+  private List<Messages.PlatformGroundOverlay> initialGroundOverlays;
   private Rect padding = new Rect(0, 0, 0, 0);
   private @Nullable String style;
 
   GoogleMapController build(
-      int id,
-      Context context,
-      BinaryMessenger binaryMessenger,
-      LifecycleProvider lifecycleProvider) {
+          int id,
+          Context context,
+          BinaryMessenger binaryMessenger,
+          LifecycleProvider lifecycleProvider) {
     final GoogleMapController controller =
-        new GoogleMapController(id, context, binaryMessenger, lifecycleProvider, options);
+            new GoogleMapController(id, context, binaryMessenger, lifecycleProvider, options);
     controller.init();
     controller.setMyLocationEnabled(myLocationEnabled);
     controller.setMyLocationButtonEnabled(myLocationButtonEnabled);
@@ -52,6 +53,7 @@ class GoogleMapBuilder implements GoogleMapOptionsSink {
     controller.setInitialPolylines(initialPolylines);
     controller.setInitialCircles(initialCircles);
     controller.setInitialHeatmaps(initialHeatmaps);
+    controller.setInitialGroundOverlays(initialGroundOverlays);
     controller.setPadding(padding.top, padding.left, padding.bottom, padding.right);
     controller.setInitialTileOverlays(initialTileOverlays);
     controller.setMapStyle(style);
@@ -60,10 +62,6 @@ class GoogleMapBuilder implements GoogleMapOptionsSink {
 
   void setInitialCameraPosition(CameraPosition position) {
     options.camera(position);
-  }
-
-  public void setMapId(String mapId) {
-    options.mapId(mapId);
   }
 
   @Override
@@ -200,5 +198,10 @@ class GoogleMapBuilder implements GoogleMapOptionsSink {
   @Override
   public void setMapStyle(@Nullable String style) {
     this.style = style;
+  }
+
+  @Override
+  public void setInitialGroundOverlays(Object initialGroundOverlays) {
+    this.initialGroundOverlays = initialGroundOverlays;
   }
 }
