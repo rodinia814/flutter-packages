@@ -58,9 +58,8 @@ public class GoogleMapFactory extends PlatformViewFactory {
     if (params.containsKey("tileOverlaysToAdd")) {
       builder.setInitialTileOverlays((List<Map<String, ?>>) params.get("tileOverlaysToAdd"));
     }
-    final Object cloudMapId = ((Map<?, ?>) options).get("cloudMapId");
-    if (cloudMapId != null) {
-      builder.setMapId((String) cloudMapId);
+    if (params.containsKey("groundOverlaysToAdd")) {
+      builder.setInitialGroundOverlays(params.get("groundOverlaysToAdd"));
     }
 
     return builder.build(id, context, binaryMessenger, lifecycleProvider);
