@@ -140,6 +140,7 @@ class GoogleMapController
     this.circlesController = new CirclesController(flutterApi, density);
     this.heatmapsController = new HeatmapsController();
     this.tileOverlaysController = new TileOverlaysController(flutterApi);
+    this.groundOverlaysController = new GroundOverlaysController(methodChannel);
   }
 
   // Constructor for testing purposes only
@@ -738,6 +739,19 @@ class GoogleMapController
     if (initialTileOverlays != null) {
       tileOverlaysController.addTileOverlays(initialTileOverlays);
     }
+  }
+
+  @Override
+  public void setInitialGroundOverlays(Object initialGroundOverlays) {
+    ArrayList<?> groundOverlays = (ArrayList<?>) initialGroundOverlays;
+    this.initialGroundOverlays = groundOverlays != null ? new ArrayList<>(groundOverlays) : null;
+    if (googleMap != null) {
+      updateInitialGroundOverlays();
+    }
+  }
+
+  private void updateInitialGroundOverlays() {
+    groundOverlaysController.addGroundOverlays(initialGroundOverlays);
   }
 
   @Override
