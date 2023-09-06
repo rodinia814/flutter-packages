@@ -37,6 +37,7 @@ import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.Polygon;
 import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.GroundOverlay;
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding;
 import io.flutter.plugin.common.BinaryMessenger;
 import io.flutter.plugin.common.MethodCall;
@@ -82,11 +83,13 @@ final class GoogleMapController
   private final PolylinesController polylinesController;
   private final CirclesController circlesController;
   private final TileOverlaysController tileOverlaysController;
+  private final GroundOverlaysController groundOverlaysController;
   private List<Object> initialMarkers;
   private List<Object> initialPolygons;
   private List<Object> initialPolylines;
   private List<Object> initialCircles;
   private List<Map<String, ?>> initialTileOverlays;
+  private List<Object> initialGroundOverlays;
   @VisibleForTesting List<Float> initialPadding;
 
   GoogleMapController(
@@ -109,6 +112,7 @@ final class GoogleMapController
     this.polylinesController = new PolylinesController(methodChannel, density);
     this.circlesController = new CirclesController(methodChannel, density);
     this.tileOverlaysController = new TileOverlaysController(methodChannel);
+    this.groundOverlaysController = new GroundOverlaysController(methodChannel);
   }
 
   @Override
@@ -157,11 +161,13 @@ final class GoogleMapController
     polylinesController.setGoogleMap(googleMap);
     circlesController.setGoogleMap(googleMap);
     tileOverlaysController.setGoogleMap(googleMap);
+    groundOverlaysController.setGoogleMap(googleMap);
     updateInitialMarkers();
     updateInitialPolygons();
     updateInitialPolylines();
     updateInitialCircles();
     updateInitialTileOverlays();
+    updateInitialGroundOverlays();
     if (initialPadding != null && initialPadding.size() == 4) {
       setPadding(
           initialPadding.get(0),
@@ -389,6 +395,17 @@ final class GoogleMapController
           result.success(null);
           break;
         }
+      case "groundOverlays#update":
+      {
+        List<Object> groundOverlaysToAdd = call.argument("groundOverlaysToAdd");
+        groundOverlaysController.addGroundOverlays(groundOverlaysToAdd);
+        List<Object> groundOverlaysToChange = call.argument("groundOverlaysToChange");
+        groundOverlaysController.changeGroundOverlays(groundOverlaysToChange);
+        List<Object> groundOverlayIdsToRemove = call.argument("groundOverlayIdsToRemove");
+        groundOverlaysController.removeGroundOverlays(groundOverlayIdsToRemove);
+        result.success(null);
+        break;
+      }
       case "map#isCompassEnabled":
         {
           result.success(googleMap.getUiSettings().isCompassEnabled());
@@ -586,6 +603,11 @@ final class GoogleMapController
   }
 
   @Override
+  public void onGroundOverlayClick(GroundOverlay groundOverlay) {
+    groundOverlaysController.onGroundOverlayTap(groundOverlay.getId());
+  }
+
+  @Override
   public void dispose() {
     if (disposed) {
       return;
@@ -613,6 +635,7 @@ final class GoogleMapController
     googleMap.setOnPolygonClickListener(listener);
     googleMap.setOnPolylineClickListener(listener);
     googleMap.setOnCircleClickListener(listener);
+    googleMap.setOnGroundOverlayClickListener(listener);
     googleMap.setOnMapClickListener(listener);
     googleMap.setOnMapLongClickListener(listener);
   }
@@ -869,6 +892,19 @@ final class GoogleMapController
 
   private void updateInitialTileOverlays() {
     tileOverlaysController.addTileOverlays(initialTileOverlays);
+  }
+
+  @Override
+  public void setInitialGroundOverlays(Object initialGroundOverlays) {
+    ArrayList<?> groundOverlays = (ArrayList<?>) initialGroundOverlays;
+    this.initialGroundOverlays = groundOverlays != null ? new ArrayList<>(groundOverlays) : null;
+    if (googleMap != null) {
+      updateInitialGroundOverlays();
+    }
+  }
+
+  private void updateInitialGroundOverlays() {
+    groundOverlaysController.addGroundOverlays(initialGroundOverlays);
   }
 
   @SuppressLint("MissingPermission")
