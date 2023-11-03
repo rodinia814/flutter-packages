@@ -1,3 +1,24 @@
+## 3.9.3
+
+* Fixes `use_build_context_synchronously` lint violations in the example app.
+
+## 3.9.2
+
+* Fixes error caused by calling `WKWebViewConfiguration.limitsNavigationsToAppBoundDomains` on
+  versions below 14.
+
+## 3.9.1
+
+* Fixes bug where `WebkitWebViewController.getUserAgent` was incorrectly returning an empty String.
+
+## 3.9.0
+
+* Adds support for `PlatformWebViewController.getUserAgent`.
+
+## 3.8.0
+
+* Adds support to register a callback to receive JavaScript console messages. See `WebKitWebViewController.setOnConsoleMessage`.
+
 ## 3.7.4
 
 * Adds pub topics to package metadata.

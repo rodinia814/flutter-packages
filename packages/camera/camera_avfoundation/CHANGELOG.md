@@ -1,3 +1,15 @@
+## 0.9.13+7
+
+* Fixes inverted orientation strings.
+
+## 0.9.13+6
+
+* Fixes incorrect use of `NSError` that could cause crashes on launch.
+
+## 0.9.13+5
+
+* Ignores audio samples until the first video sample arrives.
+
 ## 0.9.13+4
 
 * Adds pub topics to package metadata.
