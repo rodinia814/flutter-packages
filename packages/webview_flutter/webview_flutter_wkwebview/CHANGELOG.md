@@ -1,3 +1,11 @@
+## NEXT
+
+* Updates minimum supported SDK version to Flutter 3.10/Dart 3.0.
+
+## 3.9.4
+
+* Updates to Pigeon 13.
+
 ## 3.9.3
 
 * Fixes `use_build_context_synchronously` lint violations in the example app.
