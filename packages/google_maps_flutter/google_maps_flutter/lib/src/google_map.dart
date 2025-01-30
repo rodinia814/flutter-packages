@@ -570,19 +570,6 @@ class _GoogleMapState extends State<GoogleMap> {
   }
 
   void onGroundOverlayTap(GroundOverlayId groundOverlayId) {
-    assert(groundOverlayId != null);
-    final GroundOverlay? groundOverlay = _groundOverlays[groundOverlayId];
-    if (groundOverlay == null) {
-      throw UnknownMapObjectIdError('groundOverlay', groundOverlayId, 'onTap');
-    }
-    final VoidCallback? onTap = groundOverlay.onTap;
-    if (onTap != null) {
-      onTap();
-    }
-  }
-
-  void onGroundOverlayTap(GroundOverlayId groundOverlayId) {
-    assert(groundOverlayId != null);
     final GroundOverlay? groundOverlay = _groundOverlays[groundOverlayId];
     if (groundOverlay == null) {
       throw UnknownMapObjectIdError('groundOverlay', groundOverlayId, 'onTap');
