@@ -365,17 +365,6 @@ class GoogleMapsFlutterAndroid extends GoogleMapsFlutterPlatform {
   }
 
   @override
-  Future<void> updateGroundOverlays(
-   GroundOverlayUpdates groundOverlayUpdates, {
-    required int mapId,
-  }) {
-    return _channel(mapId).invokeMethod<void>(
-      'groundOverlays#update',
-      groundOverlayUpdates.toJson(),
-    );
-  }
-
-  @override
   Future<void> clearTileCache(
     TileOverlayId tileOverlayId, {
     required int mapId,
