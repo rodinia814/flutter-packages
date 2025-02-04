@@ -834,10 +834,10 @@ class GoogleMapsFlutterAndroid extends GoogleMapsFlutterPlatform {
         visible: groundOverlay.visible,
         bitmap: platformBitmapFromBitmapDescriptor(groundOverlay.bitmap!),
         bounds: _platformLatLngBoundsFromLatLngBounds(groundOverlay.bounds)!,
-        width: groundOverlay.width,
-        height: groundOverlay.height,
+        width: groundOverlay.width!,
+        height: groundOverlay.height!,
         bearing: groundOverlay.bearing,
-        anchor: groundOverlay.anchor,
+        anchor: _platformPairFromOffset(groundOverlay.anchor),
         opacity: groundOverlay.opacity);
   }
 

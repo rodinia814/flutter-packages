@@ -236,33 +236,6 @@ class PlatformCameraUpdateNewLatLngZoom {
   }
 }
 
-/// Pigeon equivalent of Offset
-class PlatformOffset {
-  PlatformOffset({
-    required this.dx,
-    required this.dy,
-  });
-
-  double dx;
-
-  double dy;
-
-  Object encode() {
-    return <Object?>[
-      dx,
-      dy,
-    ];
-  }
-
-  static PlatformOffset decode(Object result) {
-    result as List<Object?>;
-    return PlatformOffset(
-      dx: result[0]! as double,
-      dy: result[1]! as double,
-    );
-  }
-}
-
 /// Pigeon equivalent of ScrollBy
 class PlatformCameraUpdateScrollBy {
   PlatformCameraUpdateScrollBy({
@@ -888,7 +861,7 @@ class PlatformGroundOverlay {
 
   double bearing;
 
-  PlatformOffset anchor;
+  PlatformDoublePair anchor;
 
   double opacity;
 
@@ -919,10 +892,10 @@ class PlatformGroundOverlay {
       visible: result[4]! as bool,
       bitmap: PlatformBitmap.decode(result[5]!),
       bounds: PlatformLatLngBounds.decode(result[6]!),
-      width: result[7]! as int,
-      height: result[8] as int,
+      width: result[7]! as double,
+      height: result[8] as double,
       bearing: result[9] as double,
-      anchor: PlatformOffset.decode(result[10]),
+      anchor: PlatformDoublePair.decode(result[10]),
       opacity: result[11] as double,
     );
   }
