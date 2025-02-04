@@ -882,13 +882,13 @@ class PlatformGroundOverlay {
 
   PlatformLatLngBounds bounds;
 
-  int width;
+  double width;
 
-  int height;
+  double height;
 
   double bearing;
 
-  PlatformOffset offset;
+  PlatformOffset anchor;
 
   double opacity;
 
