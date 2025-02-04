@@ -837,7 +837,7 @@ class GoogleMapsFlutterAndroid extends GoogleMapsFlutterPlatform {
         width: groundOverlay.width!,
         height: groundOverlay.height!,
         bearing: groundOverlay.bearing,
-        anchor: _platformPairFromOffset(groundOverlay.anchor),
+        anchor: _platformPairFromOffset(groundOverlay.anchor!),
         opacity: groundOverlay.opacity);
   }
 
