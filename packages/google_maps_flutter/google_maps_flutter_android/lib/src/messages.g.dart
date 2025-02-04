@@ -824,6 +824,75 @@ class PlatformTile {
   }
 }
 
+/// Pigeon equivalent of the GroundOverlay class.
+class PlatformGroundOverlay {
+  PlatformGroundOverlay({
+    required this.groundOverlayId,
+    required this.consumeTapEvents,
+    required this.location,
+    required this.zIndex,
+    required this.visible,
+    required this.bitmap,
+    required this.bounds,
+    required this.width,
+    required this.height,
+    required this.bearing,
+    required this.anchor,
+    required this.opacity,
+  });
+
+  String groundOverlayId;
+
+  bool consumeTapEvents;
+
+  PlatformLatLng location;
+
+  int zIndex;
+
+  bool visible;
+
+  PlatformBitmap bitmap;
+
+  PlatformLatLngBounds bounds,
+
+  int width;
+
+  int height;
+
+  double bearing;
+
+  Object encode() {
+    return <Object?>[
+      groundOverlayId,
+      consumeTapEvents,
+      location,
+      zIndex,
+      visible,
+      bitmap,
+      bounds,
+      width,
+      height,
+      bearing
+    ];
+  }
+
+  static PlatformGroundOverlay decode(Object result) {
+    result as List<Object?>;
+    return PlatformGroundOverlay(
+      groundOverlayId: result[0]! as String,
+      consumeTapEvents: result[1]! as bool,
+      location: PlatformLatLng.decode(result[2]!),
+      zIndex: result[3]! as int,
+      visible: result[4]! as bool,
+      bitmap: PlatformBitmap.decode(result[5]!),
+      bounds: PlatformLatLngBounds.decode(result[6]!),
+      width: result[7]! as int,
+      height: result[8] as int,
+      bearing: result[9] as double,
+    );
+  }
+}
+
 /// Pigeon equivalent of the TileOverlay class.
 class PlatformTileOverlay {
   PlatformTileOverlay({
@@ -2009,6 +2078,32 @@ class MapsApi {
       List<PlatformTileOverlay> toChange, List<String> idsToRemove) async {
     final String pigeonVar_channelName =
         'dev.flutter.pigeon.google_maps_flutter_android.MapsApi.updateTileOverlays$pigeonVar_messageChannelSuffix';
+    final BasicMessageChannel<Object?> pigeonVar_channel =
+        BasicMessageChannel<Object?>(
+      pigeonVar_channelName,
+      pigeonChannelCodec,
+      binaryMessenger: pigeonVar_binaryMessenger,
+    );
+    final List<Object?>? pigeonVar_replyList = await pigeonVar_channel
+        .send(<Object?>[toAdd, toChange, idsToRemove]) as List<Object?>?;
+    if (pigeonVar_replyList == null) {
+      throw _createConnectionError(pigeonVar_channelName);
+    } else if (pigeonVar_replyList.length > 1) {
+      throw PlatformException(
+        code: pigeonVar_replyList[0]! as String,
+        message: pigeonVar_replyList[1] as String?,
+        details: pigeonVar_replyList[2],
+      );
+    } else {
+      return;
+    }
+  }
+
+  /// Updates the set of ground overlays on the map.
+  Future<void> updateGroundOverlays(List<PlatformGroundOverlay> toAdd,
+      List<PlatformGroundOverlay> toChange, List<String> idsToRemove) async {
+    final String pigeonVar_channelName =
+        'dev.flutter.pigeon.google_maps_flutter_android.MapsApi.updateGroundOverlays$pigeonVar_messageChannelSuffix';
     final BasicMessageChannel<Object?> pigeonVar_channel =
         BasicMessageChannel<Object?>(
       pigeonVar_channelName,

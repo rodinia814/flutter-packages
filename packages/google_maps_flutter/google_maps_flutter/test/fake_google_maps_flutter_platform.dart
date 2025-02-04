@@ -344,4 +344,6 @@ class PlatformMapStateRecorder {
   final List<Set<TileOverlay>> tileOverlaySets = <Set<TileOverlay>>[];
   final List<ClusterManagerUpdates> clusterManagerUpdates =
       <ClusterManagerUpdates>[];
+  final List<GroundOverlayUpdates> groundOverlayUpdates = <GroundOverlayUpdates>[];
+
 }

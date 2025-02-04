@@ -358,9 +358,10 @@ class GoogleMapsFlutterAndroid extends GoogleMapsFlutterPlatform {
    GroundOverlayUpdates groundOverlayUpdates, {
     required int mapId,
   }) {
-    return _channel(mapId).invokeMethod<void>(
-      'groundOverlays#update',
-      groundOverlayUpdates.toJson(),
+    return _hostApi(mapId).updateGroundOverlays(
+      groundOverlayUpdates.groundOverlaysToAdd.map(_platformGroundOverlayFromGroundOverlay).toList(),
+      groundOverlayUpdates.groundOverlaysToChange.map(_platformGroundOverlayFromGroundOverlay).toList(),
+      groundOverlayUpdates.groundOverlayIdsToRemove.map((GroundOverlayId id) => id.value).toList(),
     );
   }
 
@@ -638,11 +639,9 @@ class GoogleMapsFlutterAndroid extends GoogleMapsFlutterPlatform {
           polylines: polylines,
           circles: circles,
           clusterManagers: clusterManagers,
-          tileOverlays: tileOverlays),
-      mapConfiguration: _platformMapConfigurationFromOptionsJson(mapOptions),
           tileOverlays: tileOverlays,
           groundOverlays: groundOverlays),
-      mapOptions: mapOptions,
+      mapConfiguration: _platformMapConfigurationFromOptionsJson(mapOptions),
     );
   }
 
@@ -823,6 +822,23 @@ class GoogleMapsFlutterAndroid extends GoogleMapsFlutterPlatform {
       visible: tileOverlay.visible,
       tileSize: tileOverlay.tileSize,
     );
+  }
+
+  static PlatformGroundOverlay _platformGroundOverlayFromGroundOverlay(
+      GroundOverlay groundOverlay) {
+    return PlatformGroundOverlay(
+        groundOverlayId: groundOverlay.groundOverlayId.value,
+        consumeTapEvents: groundOverlay.consumeTapEvents,
+        location: _platformLatLngFromLatLng(groundOverlay.location!),
+        zIndex: groundOverlay.zIndex,
+        visible: groundOverlay.visible,
+        bitmap: platformBitmapFromBitmapDescriptor(groundOverlay.bitmap!),
+        bounds: _platformLatLngBoundsFromLatLngBounds(groundOverlay.bounds)!,
+        width: groundOverlay.width,
+        height: groundOverlay.height,
+        bearing: groundOverlay.bearing,
+        anchor: groundOverlay.anchor,
+        opacity: groundOverlay.opacity);
   }
 
   static PlatformCameraUpdate _platformCameraUpdateFromCameraUpdate(
