@@ -39,7 +39,7 @@ class GroundOverlayBuilder implements GroundOverlayOptionsSink {
     }
 
     @Override
-    public void setLocation(Object location, Object width, Object height, Object bounds) {
+    public void setLocation(LatLng location, Float width, Float height, LatLngBounds bounds) {
         if (height != null) {
             groundOverlayOptions.position((LatLng) location, (float) width, (float) height);
         } else {

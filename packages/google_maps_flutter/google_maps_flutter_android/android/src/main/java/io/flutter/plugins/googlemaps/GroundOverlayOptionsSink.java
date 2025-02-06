@@ -1,6 +1,8 @@
 package io.flutter.plugins.googlemaps;
 
 import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 
 interface GroundOverlayOptionsSink {
     void setConsumeTapEvents(boolean consumeTapEvents);
@@ -9,7 +11,7 @@ interface GroundOverlayOptionsSink {
 
     void setZIndex(float zIndex);
 
-    void setLocation(LatLng location, float width, float height, LatLngBounds bounds);
+    void setLocation(LatLng location, Float width, Float height, LatLngBounds bounds);
 
     void setBitmapDescriptor(BitmapDescriptor bd);
 

@@ -719,14 +719,13 @@ class Convert {
         sink.setConsumeTapEvents(groundOverlay.getConsumeTapEvents());
         final Double width = groundOverlay.getWidth();
         final Double height = groundOverlay.getHeight();
-        final LatLng location = groundOverlay.getLocation();
         if (height != null) {
-            sink.setLocation(location, toFloat(width), toFloat(height), null);
+            sink.setLocation(latLngFromPigeon(groundOverlay.getLocation()), toFloat(width), toFloat(height), null);
         } else {
             if (width != null) {
-                sink.setLocation(toLatLng(location), toFloat(width), null, null);
+                sink.setLocation(latLngFromPigeon(groundOverlay.getLocation()), toFloat(width), null, null);
             } else {
-                sink.setLocation(null, null, null, groundOverlay.getBounds());
+                sink.setLocation(null, null, null, latLngBoundsFromPigeon(groundOverlay.getBounds()));
             }
         }
 
