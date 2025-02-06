@@ -316,6 +316,38 @@ class PlatformTileOverlay {
   final int tileSize;
 }
 
+/// Pigeon equivalent of the GroundOverlay class.
+class PlatformGroundOverlay {
+  PlatformGroundOverlay({
+    required this.groundOverlayId,
+    required this.consumeTapEvents,
+    required this.location,
+    required this.zIndex,
+    required this.visible,
+    required this.bitmap,
+    required this.bounds,
+    required this.width,
+    required this.height,
+    required this.bearing,
+    required this.anchor,
+    required this.opacity,
+  });
+
+  String groundOverlayId;
+  bool consumeTapEvents;
+  PlatformLatLng location;
+  int zIndex;
+  bool visible;
+  PlatformBitmap bitmap;
+  PlatformLatLngBounds bounds;
+  double width;
+  double height;
+  double bearing;
+  PlatformPoint anchor;
+  double opacity;
+
+}
+
 /// Pigeon equivalent of Flutter's EdgeInsets.
 class PlatformEdgeInsets {
   PlatformEdgeInsets({
@@ -368,6 +400,7 @@ class PlatformMapViewCreationParams {
     required this.initialPolylines,
     required this.initialHeatmaps,
     required this.initialTileOverlays,
+    required this.initialGroundOverlays,
     required this.initialClusterManagers,
   });
 
@@ -379,6 +412,7 @@ class PlatformMapViewCreationParams {
   final List<PlatformPolyline> initialPolylines;
   final List<PlatformHeatmap> initialHeatmaps;
   final List<PlatformTileOverlay> initialTileOverlays;
+  final List<PlatformGroundOverlay> initialGroundOverlays;
   final List<PlatformClusterManager> initialClusterManagers;
 }
 

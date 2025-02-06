@@ -344,20 +344,10 @@ class GoogleMapsFlutterIOS extends GoogleMapsFlutterPlatform {
     GroundOverlayUpdates groundOverlayUpdates, {
     required int mapId,
   }) {
-    return _channel(mapId).invokeMethod<void>(
-      'groundOverlays#update',
-      groundOverlayUpdates.toJson(),
-    );
-  }
-
-  @override
-  Future<void> updateGroundOverlays(
-    GroundOverlayUpdates groundOverlayUpdates, {
-    required int mapId,
-  }) {
-    return _channel(mapId).invokeMethod<void>(
-      'groundOverlays#update',
-      groundOverlayUpdates.toJson(),
+    return _hostApi(mapId).updateGroundOverlays(
+      groundOverlayUpdates.groundOverlaysToAdd.map(_platformGroundOverlayFromGroundOverlay).toList(),
+      groundOverlayUpdates.groundOverlaysToChange.map(_platformGroundOverlayFromGroundOverlay).toList(),
+      groundOverlayUpdates.groundOverlayIdsToRemove.map((GroundOverlayId id) => id.value).toList(),
     );
   }
 

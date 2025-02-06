@@ -140,7 +140,7 @@ class GoogleMapController
     this.circlesController = new CirclesController(flutterApi, density);
     this.heatmapsController = new HeatmapsController();
     this.tileOverlaysController = new TileOverlaysController(flutterApi);
-    this.groundOverlaysController = new GroundOverlaysController(methodChannel);
+    this.groundOverlaysController = new GroundOverlaysController(flutterApi);
   }
 
   // Constructor for testing purposes only
@@ -742,22 +742,8 @@ class GoogleMapController
   }
 
   @Override
-  public void setInitialGroundOverlays(Object initialGroundOverlays) {
-    ArrayList<?> groundOverlays = (ArrayList<?>) initialGroundOverlays;
-    this.initialGroundOverlays = groundOverlays != null ? new ArrayList<>(groundOverlays) : null;
-    if (googleMap != null) {
-      updateInitialGroundOverlays();
-    }
-  }
-
-  private void updateInitialGroundOverlays() {
-    groundOverlaysController.addGroundOverlays(initialGroundOverlays);
-  }
-
-  @Override
-  public void setInitialGroundOverlays(Object initialGroundOverlays) {
-    ArrayList<?> groundOverlays = (ArrayList<?>) initialGroundOverlays;
-    this.initialGroundOverlays = groundOverlays != null ? new ArrayList<>(groundOverlays) : null;
+  public void setInitialGroundOverlays(@NonNull List<Messages.PlatformGroundOverlay> initialGroundOverlays) {
+    this.initialGroundOverlays = initialGroundOverlays;
     if (googleMap != null) {
       updateInitialGroundOverlays();
     }
@@ -929,6 +915,16 @@ class GoogleMapController
     tileOverlaysController.addTileOverlays(toAdd);
     tileOverlaysController.changeTileOverlays(toChange);
     tileOverlaysController.removeTileOverlays(idsToRemove);
+  }
+
+  @Override
+  public void updateGroundOverlays(
+      @NonNull List<Messages.PlatformGroundOverlay> toAdd,
+      @NonNull List<Messages.PlatformGroundOverlay> toChange,
+      @NonNull List<String> idsToRemove) {
+    groundOverlaysController.addGroundOverlays(toAdd);
+    groundOverlaysController.changeGroundOverlays(toChange);
+    groundOverlaysController.removeGroundOverlays(idsToRemove);
   }
 
   @Override

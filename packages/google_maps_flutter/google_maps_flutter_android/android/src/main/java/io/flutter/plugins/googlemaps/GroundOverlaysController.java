@@ -1,5 +1,7 @@
 package io.flutter.plugins.googlemaps;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.GroundOverlay;
 import com.google.android.gms.maps.model.GroundOverlayOptions;
@@ -8,17 +10,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import io.flutter.plugin.common.MethodChannel;
+import io.flutter.plugins.googlemaps.Messages.MapsCallbackApi;
 
 class GroundOverlaysController {
 
     private GoogleMap googleMap;
     private final Map<String, GroundOverlayController> groundOverlayIdToController;
     private final Map<String, String> googleMapsGroundOverlayIdToDartOverlayId;
-    private final MethodChannel methodChannel;
+    private final MapsCallbackApi flutterApi;
 
-    GroundOverlaysController(MethodChannel methodChannel) {
-        this.methodChannel = methodChannel;
+    GroundOverlaysController(MapsCallbackApi flutterApi) {
+        this.flutterApi = flutterApi;
         this.groundOverlayIdToController = new HashMap<>();
         this.googleMapsGroundOverlayIdToDartOverlayId = new HashMap<>();
     }
@@ -27,19 +29,13 @@ class GroundOverlaysController {
         this.googleMap = googleMap;
     }
 
-    void addGroundOverlays(List<Object> groundOverlaysToAdd) {
-        if (groundOverlaysToAdd != null) {
-            for (Object groundOverlayToAdd : groundOverlaysToAdd) {
+    void addGroundOverlays(@NonNull List<Messages.PlatformGroundOverlay> groundOverlaysToAdd) {
+            for (Messages.PlatformGroundOverlay groundOverlayToAdd : groundOverlaysToAdd) {
                 addGroundOverlay(groundOverlayToAdd);
             }
-        }
     }
 
-    private void addGroundOverlay(Object groundOverlay) {
-        if (groundOverlay == null) {
-            return;
-        }
-
+    private void addGroundOverlay(@NonNull Messages.PlatformGroundOverlay groundOverlay) {
         GroundOverlayBuilder groundOverlayBuilder = new GroundOverlayBuilder();
         String groundOverlayId = Convert.interpretGroundOverlayOptions(groundOverlay, groundOverlayBuilder);
         GroundOverlayOptions options = groundOverlayBuilder.build();
@@ -61,7 +57,7 @@ class GroundOverlaysController {
         if (overlayId == null) {
             return false;
         }
-        methodChannel.invokeMethod("groundOverlay#onTap", Convert.groundOverlayIdToJson(overlayId));
+        flutterApi.onGroundOverlayTap(googleOverlayId, new NoOpVoidResult());
         GroundOverlayController groundOverlayController = groundOverlayIdToController.get(overlayId);
         if (groundOverlayController != null) {
             return groundOverlayController.consumeTapEvents();
@@ -69,15 +65,15 @@ class GroundOverlaysController {
         return false;
     }
 
-    void changeGroundOverlays(List<Object> groundOverlaysToChange) {
+    void changeGroundOverlays(List<Messages.PlatformGroundOverlay> groundOverlaysToChange) {
         if (groundOverlaysToChange != null) {
-            for (Object groundOverlayToChange : groundOverlaysToChange) {
+            for (Messages.PlatformGroundOverlay groundOverlayToChange : groundOverlaysToChange) {
                 changeGroundOverlay(groundOverlayToChange);
             }
         }
     }
 
-    private void changeGroundOverlay(Object groundOverlay) {
+    private void changeGroundOverlay(Messages.PlatformGroundOverlay groundOverlay) {
         if (groundOverlay == null) {
             return;
         }
@@ -88,7 +84,7 @@ class GroundOverlaysController {
         }
     }
 
-    void removeGroundOverlays(List<Object> groundOverlaysToRemove) {
+    void removeGroundOverlays(List<String> groundOverlaysToRemove) {
         if (groundOverlaysToRemove == null) {
             return;
         }

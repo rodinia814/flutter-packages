@@ -339,6 +339,37 @@ class PlatformTileOverlay {
   final int tileSize;
 }
 
+/// Pigeon equivalent of the GroundOverlay class.
+class PlatformGroundOverlay {
+  PlatformGroundOverlay({
+    required this.groundOverlayId,
+    required this.consumeTapEvents,
+    required this.location,
+    required this.zIndex,
+    required this.visible,
+    required this.bitmap,
+    required this.bounds,
+    required this.width,
+    required this.height,
+    required this.bearing,
+    required this.anchor,
+    required this.opacity,
+  });
+
+  final String groundOverlayId;
+  final bool consumeTapEvents;
+  final PlatformLatLng location;
+  final int zIndex;
+  final bool visible;
+  final PlatformBitmap bitmap;
+  final PlatformLatLngBounds bounds;
+  final double width;
+  final double height;
+  final double bearing;
+  final PlatformDoublePair anchor;
+  final double opacity;
+}
+
 /// Pigeon equivalent of Flutter's EdgeInsets.
 class PlatformEdgeInsets {
   PlatformEdgeInsets({
@@ -406,6 +437,7 @@ class PlatformMapViewCreationParams {
     required this.initialPolylines,
     required this.initialHeatmaps,
     required this.initialTileOverlays,
+    required this.initialGroundOverlays,
     required this.initialClusterManagers,
   });
 
@@ -417,6 +449,7 @@ class PlatformMapViewCreationParams {
   final List<PlatformPolyline> initialPolylines;
   final List<PlatformHeatmap> initialHeatmaps;
   final List<PlatformTileOverlay> initialTileOverlays;
+  final List<PlatformGroundOverlay> initialGroundOverlays;
   final List<PlatformClusterManager> initialClusterManagers;
 }
 
@@ -631,6 +664,10 @@ abstract class MapsApi {
   void updateTileOverlays(List<PlatformTileOverlay> toAdd,
       List<PlatformTileOverlay> toChange, List<String> idsToRemove);
 
+  /// Updates the set of ground overlays on the map.
+  void updateGroundOverlays(List<PlatformGroundOverlay> toAdd,
+      List<PlatformGroundOverlay> toChange, List<String> idsToRemove);
+
   /// Gets the screen coordinate for the given map location.
   PlatformPoint getScreenCoordinate(PlatformLatLng latLng);
 
@@ -725,6 +762,9 @@ abstract class MapsCallbackApi {
 
   /// Called when a polyline is tapped.
   void onPolylineTap(String polylineId);
+
+  /// Called when a ground overlay is tapped.
+  void onGroundOverlayTap(String groundOverlayId);
 
   /// Called to get data for a map tile.
   @async

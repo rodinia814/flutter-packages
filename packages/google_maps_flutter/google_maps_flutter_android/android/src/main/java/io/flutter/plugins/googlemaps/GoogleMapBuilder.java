@@ -201,7 +201,7 @@ class GoogleMapBuilder implements GoogleMapOptionsSink {
   }
 
   @Override
-  public void setInitialGroundOverlays(Object initialGroundOverlays) {
+  public void setInitialGroundOverlays(@NonNull List<Messages.PlatformGroundOverlay> initialGroundOverlays) {
     this.initialGroundOverlays = initialGroundOverlays;
   }
 }
