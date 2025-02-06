@@ -72,7 +72,7 @@ class GroundOverlayController implements GroundOverlayOptionsSink {
 
     @Override
     public void setTransparency(float transparency) {
-        this.groundOverlay.transparency(transparency);
+        this.groundOverlay.setTransparency(transparency);
     }
 
     String getGoogleMapsGroundOverlayId() {
