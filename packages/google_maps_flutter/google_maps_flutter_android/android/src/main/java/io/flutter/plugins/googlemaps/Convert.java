@@ -733,7 +733,7 @@ class Convert {
         sink.setVisible(groundOverlay.getVisible());
         sink.setZIndex(groundOverlay.getZIndex());
 
-        sink.setBitmapDescriptor(toBitmapDescriptor(groundOverlay.getBitmap()));
+        sink.setBitmapDescriptor(toBitmapDescriptor(groundOverlay.getBitmap(), null, 1.0f));
         final String groundOverlayId = groundOverlay.getGroundOverlayId();
         if (groundOverlayId == null) {
             throw new IllegalArgumentException("groundOverlayId was null");
