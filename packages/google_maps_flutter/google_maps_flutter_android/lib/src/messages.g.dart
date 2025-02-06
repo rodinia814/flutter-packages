@@ -887,16 +887,16 @@ class PlatformGroundOverlay {
     return PlatformGroundOverlay(
       groundOverlayId: result[0]! as String,
       consumeTapEvents: result[1]! as bool,
-      location: result[2]! as PlatformLatLng,
+      location: PlatformLatLng.decode(result[2]!),
       zIndex: result[3]! as int,
       visible: result[4]! as bool,
-      bitmap: result[5]! as PlatformBitmap,
-      bounds: result[6]! as PlatformLatLngBounds,
+      bitmap: PlatformBitmap.decode(result[5]!),
+      bounds: PlatformLatLngBounds.decode(result[6]!),
       width: result[7]! as double,
-      height: result[8]! as double,
-      bearing: result[9]! as double,
-      anchor: result[10]! as PlatformDoublePair,
-      opacity: result[11]! as double,
+      height: result[8] as double,
+      bearing: result[9] as double,
+      anchor: PlatformDoublePair.decode(result[10]),
+      opacity: result[11] as double,
     );
   }
 }
