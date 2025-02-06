@@ -542,7 +542,7 @@ class GoogleMapsFlutterAndroid extends GoogleMapsFlutterPlatform {
           .map(_platformTileOverlayFromTileOverlay)
           .toList(),
       initialGroundOverlays: mapObjects.groundOverlays
-            .map(_platformGroundOverlayFromGrounOverlay)
+            .map(_platformGroundOverlayFromGroundOverlay)
             .toList(),
       initialClusterManagers: mapObjects.clusterManagers
           .map(_platformClusterManagerFromClusterManager)

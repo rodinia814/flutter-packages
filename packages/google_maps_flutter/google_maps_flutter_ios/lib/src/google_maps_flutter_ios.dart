@@ -723,7 +723,7 @@ class GoogleMapsFlutterIOS extends GoogleMapsFlutterPlatform {
         width: groundOverlay.width!,
         height: groundOverlay.height!,
         bearing: groundOverlay.bearing,
-        anchor: _platformPairFromOffset(groundOverlay.anchor!),
+        anchor: _platformPointFromOffset(groundOverlay.anchor!),
         opacity: groundOverlay.opacity);
   }
 
