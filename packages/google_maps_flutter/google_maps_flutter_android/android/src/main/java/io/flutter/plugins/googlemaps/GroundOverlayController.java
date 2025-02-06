@@ -44,19 +44,19 @@ class GroundOverlayController implements GroundOverlayOptionsSink {
     }
 
     @Override
-    public void setLocation(Object location, Object width, Object height, Object bounds) {
+    public void setLocation(LatLng location, Float width, Float height, LatLngBounds bounds) {
         if (height != null && width != null) {
-            this.groundOverlay.setDimensions((float) width, (float) height);
+            this.groundOverlay.setDimensions(width, height);
         } else {
             if (width != null) {
-                this.groundOverlay.setDimensions((float) width);
+                this.groundOverlay.setDimensions(width);
             }
         }
         if (location != null) {
-            this.groundOverlay.setPosition((LatLng) location);
+            this.groundOverlay.setPosition(location);
         }
         if (bounds != null) {
-            this.groundOverlay.setPositionFromBounds((LatLngBounds) bounds);
+            this.groundOverlay.setPositionFromBounds(bounds);
         }
     }
 
@@ -68,11 +68,6 @@ class GroundOverlayController implements GroundOverlayOptionsSink {
     @Override
     public void setBearing(float bearing) {
         this.groundOverlay.setBearing(bearing);
-    }
-
-    @Override
-    public void setTransparency(float transparency) {
-        this.groundOverlay.setTransparency(transparency);
     }
 
     String getGoogleMapsGroundOverlayId() {

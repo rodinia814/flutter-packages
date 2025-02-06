@@ -403,15 +403,6 @@ class Convert {
     return new LatLng(latLng.getLatitude(), latLng.getLongitude());
   }
 
-  static Object groundOverlayIdToJson(String groundOverlayId) {
-    if (groundOverlayId == null) {
-      return null;
-    }
-    final Map<String, Object> data = new HashMap<>(1);
-    data.put("groundOverlayId", groundOverlayId);
-    return data;
-  }
-
   static Messages.PlatformCluster clusterToPigeon(
       String clusterManagerId, Cluster<MarkerBuilder> cluster) {
     int clusterSize = cluster.getSize();
@@ -431,15 +422,6 @@ class Convert {
         .setBounds(latLngBoundsToPigeon(latLngBoundsBuilder.build()))
         .setMarkerIds(Arrays.asList(markerIds))
         .build();
-  }
-
-  static Object groundOverlayIdToJson(String groundOverlayId) {
-    if (groundOverlayId == null) {
-      return null;
-    }
-    final Map<String, Object> data = new HashMap<>(1);
-    data.put("groundOverlayId", groundOverlayId);
-    return data;
   }
 
   static LatLng toLatLng(Object o) {
@@ -733,49 +715,27 @@ class Convert {
     }
   }
 
-    static String interpretGroundOverlayOptions(Object o, GroundOverlayOptionsSink sink) {
-        final Map<?, ?> data = toMap(o);
-        final Object consumeTapEvents = data.get("consumeTapEvents");
-        if (consumeTapEvents != null) {
-            sink.setConsumeTapEvents(toBoolean(consumeTapEvents));
-        }
-        final Object transparency = data.get("transparency");
-        if (transparency != null) {
-            sink.setTransparency(toFloat(transparency));
-        }
-
-        final Object width = data.get("width");
-        final Object height = data.get("height");
-        final Object location = data.get("location");
-        final Object bounds = data.get("bounds");
+    static String interpretGroundOverlayOptions(Messages.PlatformGroundOverlay groundOverlay, GroundOverlayOptionsSink sink) {
+        sink.setConsumeTapEvents(groundOverlay.getConsumeTapEvents());
+        final Double width = groundOverlay.getWidth();
+        final Double height = groundOverlay.getHeight();
+        final LatLng location = groundOverlay.getLocation();
         if (height != null) {
-            sink.setLocation(toLatLng(location), toFloat(width), toFloat(height), null);
+            sink.setLocation(location, toFloat(width), toFloat(height), null);
         } else {
             if (width != null) {
                 sink.setLocation(toLatLng(location), toFloat(width), null, null);
             } else {
-                sink.setLocation(null, null, null, toLatLngBounds(bounds));
+                sink.setLocation(null, null, null, groundOverlay.getBounds());
             }
         }
 
-        final Object bearing = data.get("bearing");
-        if (bearing != null) {
-            sink.setBearing(toFloat(bearing));
-        }
-        final Object visible = data.get("visible");
-        if (visible != null) {
-            sink.setVisible(toBoolean(visible));
-        }
-        final Object zIndex = data.get("zIndex");
-        if (zIndex != null) {
-            sink.setZIndex(toFloat(zIndex));
-        }
+        sink.setBearing(groundOverlay.getBearing());
+        sink.setVisible(groundOverlay.getVisible());
+        sink.setZIndex(groundOverlay.getZIndex());
 
-        final Object bitmap = data.get("bitmap");
-        if (bitmap != null) {
-            sink.setBitmapDescriptor(toBitmapDescriptor(bitmap));
-        }
-        final String groundOverlayId = (String) data.get("groundOverlayId");
+        sink.setBitmapDescriptor(groundOverlay.getBitmapDescriptor());
+        final String groundOverlayId = groundOverlay.getGroundOverlayId();
         if (groundOverlayId == null) {
             throw new IllegalArgumentException("groundOverlayId was null");
         } else {
