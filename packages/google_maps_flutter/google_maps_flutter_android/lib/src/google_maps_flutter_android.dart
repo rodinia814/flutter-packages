@@ -541,6 +541,9 @@ class GoogleMapsFlutterAndroid extends GoogleMapsFlutterPlatform {
       initialTileOverlays: mapObjects.tileOverlays
           .map(_platformTileOverlayFromTileOverlay)
           .toList(),
+      initialGroundOverlays: mapObjects.groundOverlays
+            .map(_platformGroundOverlayFromGrounOverlay)
+            .toList(),
       initialClusterManagers: mapObjects.clusterManagers
           .map(_platformClusterManagerFromClusterManager)
           .toList(),
@@ -1117,6 +1120,11 @@ class HostMapMessageHandler implements MapsCallbackApi {
   @override
   void onPolylineTap(String polylineId) {
     streamController.add(PolylineTapEvent(mapId, PolylineId(polylineId)));
+  }
+
+  @override
+  void onGroundOverlayTap(String groundOverlayId) {
+    streamController.add(GroundOverlayTapEvent(mapId, GroundOverlayId(groundOverlayId)));
   }
 
   @override

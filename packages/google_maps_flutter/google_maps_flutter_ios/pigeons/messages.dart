@@ -630,6 +630,11 @@ abstract class MapsApi {
   void updateTileOverlays(List<PlatformTileOverlay> toAdd,
       List<PlatformTileOverlay> toChange, List<String> idsToRemove);
 
+  /// Updates the set of ground overlays on the map.
+  @ObjCSelector('updateGroundOverlaysByAdding:changing:removing:')
+  void updateGroundOverlays(List<PlatformGroundOverlay> toAdd,
+      List<PlatformGroundOverlay> toChange, List<String> idsToRemove);
+
   /// Gets the screen coordinate for the given map location.
   @ObjCSelector('screenCoordinatesForLatLng:')
   PlatformPoint getScreenCoordinate(PlatformLatLng latLng);

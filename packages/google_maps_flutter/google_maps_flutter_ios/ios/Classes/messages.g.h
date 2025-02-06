@@ -693,6 +693,8 @@ NSObject<FlutterMessageCodec> *FGMGetMessagesCodec(void);
 - (void)updatePolylinesByAdding:(NSArray<FGMPlatformPolyline *> *)toAdd changing:(NSArray<FGMPlatformPolyline *> *)toChange removing:(NSArray<NSString *> *)idsToRemove error:(FlutterError *_Nullable *_Nonnull)error;
 /// Updates the set of tile overlays on the map.
 - (void)updateTileOverlaysByAdding:(NSArray<FGMPlatformTileOverlay *> *)toAdd changing:(NSArray<FGMPlatformTileOverlay *> *)toChange removing:(NSArray<NSString *> *)idsToRemove error:(FlutterError *_Nullable *_Nonnull)error;
+/// Updates the set of ground overlays on the map.
+- (void)updateGroundOverlaysByAdding:(NSArray<FGMPlatformGroundOverlay *> *)toAdd changing:(NSArray<FGMPlatformGroundOverlay *> *)toChange removing:(NSArray<NSString *> *)idsToRemove error:(FlutterError *_Nullable *_Nonnull)error;
 /// Gets the screen coordinate for the given map location.
 ///
 /// @return `nil` only when `error != nil`.

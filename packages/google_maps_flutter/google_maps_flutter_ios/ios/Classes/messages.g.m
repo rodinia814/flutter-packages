@@ -2071,6 +2071,28 @@ void SetUpFGMMapsApiWithSuffix(id<FlutterBinaryMessenger> binaryMessenger, NSObj
       [channel setMessageHandler:nil];
     }
   }
+  /// Updates the set of ground overlays on the map.
+  {
+    FlutterBasicMessageChannel *channel =
+      [[FlutterBasicMessageChannel alloc]
+        initWithName:[NSString stringWithFormat:@"%@%@", @"dev.flutter.pigeon.google_maps_flutter_ios.MapsApi.updateGroundOverlays", messageChannelSuffix]
+        binaryMessenger:binaryMessenger
+        codec:FGMGetMessagesCodec()];
+    if (api) {
+      NSCAssert([api respondsToSelector:@selector(updateGroundOverlaysByAdding:changing:removing:error:)], @"FGMMapsApi api (%@) doesn't respond to @selector(updateGroundOverlaysByAdding:changing:removing:error:)", api);
+      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+        NSArray<id> *args = message;
+        NSArray<FGMPlatformGroundOverlay *> *arg_toAdd = GetNullableObjectAtIndex(args, 0);
+        NSArray<FGMPlatformGroundOverlay *> *arg_toChange = GetNullableObjectAtIndex(args, 1);
+        NSArray<NSString *> *arg_idsToRemove = GetNullableObjectAtIndex(args, 2);
+        FlutterError *error;
+        [api updateGroundOverlaysByAdding:arg_toAdd changing:arg_toChange removing:arg_idsToRemove error:&error];
+        callback(wrapResult(nil, error));
+      }];
+    } else {
+      [channel setMessageHandler:nil];
+    }
+  }
   /// Gets the screen coordinate for the given map location.
   {
     FlutterBasicMessageChannel *channel =

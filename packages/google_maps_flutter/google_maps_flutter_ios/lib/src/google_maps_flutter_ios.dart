@@ -710,6 +710,23 @@ class GoogleMapsFlutterIOS extends GoogleMapsFlutterPlatform {
     );
   }
 
+  static PlatformGroundOverlay _platformGroundOverlayFromGroundOverlay(
+      GroundOverlay groundOverlay) {
+    return PlatformGroundOverlay(
+        groundOverlayId: groundOverlay.groundOverlayId.value,
+        consumeTapEvents: groundOverlay.consumeTapEvents,
+        location: _platformLatLngFromLatLng(groundOverlay.location!),
+        zIndex: groundOverlay.zIndex,
+        visible: groundOverlay.visible,
+        bitmap: platformBitmapFromBitmapDescriptor(groundOverlay.bitmap!),
+        bounds: _platformLatLngBoundsFromLatLngBounds(groundOverlay.bounds)!,
+        width: groundOverlay.width!,
+        height: groundOverlay.height!,
+        bearing: groundOverlay.bearing,
+        anchor: _platformPairFromOffset(groundOverlay.anchor!),
+        opacity: groundOverlay.opacity);
+  }
+
   static PlatformClusterManager _platformClusterManagerFromClusterManager(
       ClusterManager clusterManager) {
     return PlatformClusterManager(
