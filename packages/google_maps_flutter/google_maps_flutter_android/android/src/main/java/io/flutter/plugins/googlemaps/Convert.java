@@ -729,11 +729,11 @@ class Convert {
             }
         }
 
-        sink.setBearing(groundOverlay.getBearing());
+        sink.setBearing(toFloat(groundOverlay.getBearing()));
         sink.setVisible(groundOverlay.getVisible());
         sink.setZIndex(groundOverlay.getZIndex());
 
-        sink.setBitmapDescriptor(groundOverlay.getBitmapDescriptor());
+        sink.setBitmapDescriptor(toBitmapDescriptor(groundOverlay.getBitmap()));
         final String groundOverlayId = groundOverlay.getGroundOverlayId();
         if (groundOverlayId == null) {
             throw new IllegalArgumentException("groundOverlayId was null");
