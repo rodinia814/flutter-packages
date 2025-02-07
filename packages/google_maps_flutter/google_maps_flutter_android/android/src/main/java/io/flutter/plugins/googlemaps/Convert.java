@@ -720,12 +720,12 @@ class Convert {
         final Double width = groundOverlay.getWidth();
         final Double height = groundOverlay.getHeight();
         if (height != null) {
-            sink.setLocation(latLngFromPigeon(groundOverlay.getLocation()), toFloat(width), toFloat(height), null);
+            sink.setPosition(latLngFromPigeon(groundOverlay.getPosition()), toFloat(width), toFloat(height));
         } else {
             if (width != null) {
-                sink.setLocation(latLngFromPigeon(groundOverlay.getLocation()), toFloat(width), null, null);
+                sink.setPosition(latLngFromPigeon(groundOverlay.getPosition()), toFloat(width));
             } else {
-                sink.setLocation(null, null, null, latLngBoundsFromPigeon(groundOverlay.getBounds()));
+                sink.setPosition(latLngBoundsFromPigeon(groundOverlay.getBounds()));
             }
         }
 
@@ -733,7 +733,7 @@ class Convert {
         sink.setVisible(groundOverlay.getVisible());
         sink.setZIndex(groundOverlay.getZIndex());
 
-        sink.setBitmapDescriptor(toBitmapDescriptor(groundOverlay.getBitmap(), null, 1.0f));
+        sink.setImage(toBitmapDescriptor(groundOverlay.getImage(), null, 1.0f));
         final String groundOverlayId = groundOverlay.getGroundOverlayId();
         if (groundOverlayId == null) {
             throw new IllegalArgumentException("groundOverlayId was null");

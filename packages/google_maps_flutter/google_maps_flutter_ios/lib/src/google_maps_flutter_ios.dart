@@ -715,16 +715,15 @@ class GoogleMapsFlutterIOS extends GoogleMapsFlutterPlatform {
     return PlatformGroundOverlay(
         groundOverlayId: groundOverlay.groundOverlayId.value,
         consumeTapEvents: groundOverlay.consumeTapEvents,
-        location: _platformLatLngFromLatLng(groundOverlay.location!),
+        position: groundOverlay.position == null ? null : _platformLatLngFromLatLng(groundOverlay.position),
         zIndex: groundOverlay.zIndex,
         visible: groundOverlay.visible,
-        bitmap: platformBitmapFromBitmapDescriptor(groundOverlay.bitmap!),
-        bounds: _platformLatLngBoundsFromLatLngBounds(groundOverlay.bounds)!,
-        width: groundOverlay.width!,
-        height: groundOverlay.height!,
+        image: platformBitmapFromBitmapDescriptor(groundOverlay.image!),
+        bounds: groundOverlay.bounds == null ? null : _platformLatLngBoundsFromLatLngBounds(groundOverlay.bounds),
+        width: groundOverlay.width,
+        height: groundOverlay.height,
         bearing: groundOverlay.bearing,
-        anchor: _platformPointFromOffset(groundOverlay.anchor!),
-        opacity: groundOverlay.opacity);
+        transparency: groundOverlay.transparency);
   }
 
   static PlatformClusterManager _platformClusterManagerFromClusterManager(

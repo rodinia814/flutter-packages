@@ -989,46 +989,43 @@ static id GetNullableObjectAtIndex(NSArray<id> *array, NSInteger key) {
 
 @implementation FGMPlatformGroundOverlay
 + (instancetype)makeWithGroundOverlayId:(NSString *)groundOverlayId
-    consumeTapEvents:(BOOL )consumeTapEvents
-    location:(FGMPlatformLatLng *)location
-    zIndex:(NSInteger )zIndex
-    visible:(BOOL )visible
-    bitmap:(FGMPlatformBitmap *)bitmap
-    bounds:(FGMPlatformLatLngBounds *)bounds
+    position:(nullable FGMPlatformLatLng *)position
     width:(double )width
     height:(double )height
+    bounds:(nullable FGMPlatformLatLngBounds *)bounds
+    zIndex:(NSInteger )zIndex
+    visible:(BOOL )visible
+    consumeTapEvents:(BOOL )consumeTapEvents
+    image:(FGMPlatformBitmap *)image
     bearing:(double )bearing
-    anchor:(FGMPlatformPoint *)anchor
-    opacity:(double )opacity {
+    transparency:(double )transparency {
   FGMPlatformGroundOverlay* pigeonResult = [[FGMPlatformGroundOverlay alloc] init];
   pigeonResult.groundOverlayId = groundOverlayId;
-  pigeonResult.consumeTapEvents = consumeTapEvents;
-  pigeonResult.location = location;
-  pigeonResult.zIndex = zIndex;
-  pigeonResult.visible = visible;
-  pigeonResult.bitmap = bitmap;
-  pigeonResult.bounds = bounds;
+  pigeonResult.position = position;
   pigeonResult.width = width;
   pigeonResult.height = height;
+  pigeonResult.bounds = bounds;
+  pigeonResult.zIndex = zIndex;
+  pigeonResult.visible = visible;
+  pigeonResult.consumeTapEvents = consumeTapEvents;
+  pigeonResult.image = image;
   pigeonResult.bearing = bearing;
-  pigeonResult.anchor = anchor;
-  pigeonResult.opacity = opacity;
+  pigeonResult.transparency = transparency;
   return pigeonResult;
 }
 + (FGMPlatformGroundOverlay *)fromList:(NSArray<id> *)list {
   FGMPlatformGroundOverlay *pigeonResult = [[FGMPlatformGroundOverlay alloc] init];
   pigeonResult.groundOverlayId = GetNullableObjectAtIndex(list, 0);
-  pigeonResult.consumeTapEvents = [GetNullableObjectAtIndex(list, 1) boolValue];
-  pigeonResult.location = GetNullableObjectAtIndex(list, 2);
-  pigeonResult.zIndex = [GetNullableObjectAtIndex(list, 3) integerValue];
-  pigeonResult.visible = [GetNullableObjectAtIndex(list, 4) boolValue];
-  pigeonResult.bitmap = GetNullableObjectAtIndex(list, 5);
-  pigeonResult.bounds = GetNullableObjectAtIndex(list, 6);
-  pigeonResult.width = [GetNullableObjectAtIndex(list, 7) doubleValue];
-  pigeonResult.height = [GetNullableObjectAtIndex(list, 8) doubleValue];
+  pigeonResult.position = GetNullableObjectAtIndex(list, 1);
+  pigeonResult.width = [GetNullableObjectAtIndex(list, 2) doubleValue];
+  pigeonResult.height = [GetNullableObjectAtIndex(list, 3) doubleValue];
+  pigeonResult.bounds = GetNullableObjectAtIndex(list, 4);
+  pigeonResult.zIndex = [GetNullableObjectAtIndex(list, 5) integerValue];
+  pigeonResult.visible = [GetNullableObjectAtIndex(list, 6) boolValue];
+  pigeonResult.consumeTapEvents = [GetNullableObjectAtIndex(list, 7) boolValue];
+  pigeonResult.image = GetNullableObjectAtIndex(list, 8);
   pigeonResult.bearing = [GetNullableObjectAtIndex(list, 9) doubleValue];
-  pigeonResult.anchor = GetNullableObjectAtIndex(list, 10);
-  pigeonResult.opacity = [GetNullableObjectAtIndex(list, 11) doubleValue];
+  pigeonResult.transparency = [GetNullableObjectAtIndex(list, 10) doubleValue];
   return pigeonResult;
 }
 + (nullable FGMPlatformGroundOverlay *)nullableFromList:(NSArray<id> *)list {
@@ -1037,17 +1034,16 @@ static id GetNullableObjectAtIndex(NSArray<id> *array, NSInteger key) {
 - (NSArray<id> *)toList {
   return @[
     self.groundOverlayId ?: [NSNull null],
-    @(self.consumeTapEvents),
-    self.location ?: [NSNull null],
-    @(self.zIndex),
-    @(self.visible),
-    self.bitmap ?: [NSNull null],
-    self.bounds ?: [NSNull null],
+    self.position ?: [NSNull null],
     @(self.width),
     @(self.height),
+    self.bounds ?: [NSNull null],
+    @(self.zIndex),
+    @(self.visible),
+    @(self.consumeTapEvents),
+    self.image ?: [NSNull null],
     @(self.bearing),
-    self.anchor ?: [NSNull null],
-    @(self.opacity),
+    @(self.transparency),
   ];
 }
 @end

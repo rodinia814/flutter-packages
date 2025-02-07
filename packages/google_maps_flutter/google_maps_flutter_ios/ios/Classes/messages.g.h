@@ -404,29 +404,27 @@ typedef NS_ENUM(NSUInteger, FGMPlatformMapBitmapScaling) {
 /// `init` unavailable to enforce nonnull fields, see the `make` class method.
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)makeWithGroundOverlayId:(NSString *)groundOverlayId
-    consumeTapEvents:(BOOL )consumeTapEvents
-    location:(FGMPlatformLatLng *)location
-    zIndex:(NSInteger )zIndex
-    visible:(BOOL )visible
-    bitmap:(FGMPlatformBitmap *)bitmap
-    bounds:(FGMPlatformLatLngBounds *)bounds
+    position:(nullable FGMPlatformLatLng *)position
     width:(double )width
     height:(double )height
+    bounds:(nullable FGMPlatformLatLngBounds *)bounds
+    zIndex:(NSInteger )zIndex
+    visible:(BOOL )visible
+    consumeTapEvents:(BOOL )consumeTapEvents
+    image:(FGMPlatformBitmap *)image
     bearing:(double )bearing
-    anchor:(FGMPlatformPoint *)anchor
-    opacity:(double )opacity;
+    transparency:(double )transparency;
 @property(nonatomic, copy) NSString * groundOverlayId;
-@property(nonatomic, assign) BOOL  consumeTapEvents;
-@property(nonatomic, strong) FGMPlatformLatLng * location;
-@property(nonatomic, assign) NSInteger  zIndex;
-@property(nonatomic, assign) BOOL  visible;
-@property(nonatomic, strong) FGMPlatformBitmap * bitmap;
-@property(nonatomic, strong) FGMPlatformLatLngBounds * bounds;
+@property(nonatomic, strong, nullable) FGMPlatformLatLng * position;
 @property(nonatomic, assign) double  width;
 @property(nonatomic, assign) double  height;
+@property(nonatomic, strong, nullable) FGMPlatformLatLngBounds * bounds;
+@property(nonatomic, assign) NSInteger  zIndex;
+@property(nonatomic, assign) BOOL  visible;
+@property(nonatomic, assign) BOOL  consumeTapEvents;
+@property(nonatomic, strong) FGMPlatformBitmap * image;
 @property(nonatomic, assign) double  bearing;
-@property(nonatomic, strong) FGMPlatformPoint * anchor;
-@property(nonatomic, assign) double  opacity;
+@property(nonatomic, assign) double  transparency;
 @end
 
 /// Pigeon equivalent of Flutter's EdgeInsets.

@@ -7,16 +7,18 @@ import com.google.android.gms.maps.model.LatLngBounds;
 interface GroundOverlayOptionsSink {
     void setConsumeTapEvents(boolean consumeTapEvents);
 
-    void setVisible(boolean visible);
+    void setPosition(LatLng location, float width);
+    void setPosition(LatLng location, float width, float height);
+    void setPosition(LatLngBounds bounds);
 
-    void setZIndex(float zIndex);
-
-    void setLocation(LatLng location, Float width, Float height, LatLngBounds bounds);
-
-    void setBitmapDescriptor(BitmapDescriptor bd);
+    void setImage(BitmapDescriptor bd);
 
     void setBearing(float bearing);
 
     void setTransparency(float transparency);
+
+    void setVisible(boolean visible);
+
+    void setZIndex(float zIndex);
 
 }

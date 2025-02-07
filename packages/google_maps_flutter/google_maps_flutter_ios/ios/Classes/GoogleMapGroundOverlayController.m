@@ -13,13 +13,13 @@ static double ToDouble(NSNumber* data) { return [FLTGoogleMapJSONConversions toD
 
 static float ToFloat(NSNumber* data) { return [FLTGoogleMapJSONConversions toFloat:data]; }
 
-static CLLocationCoordinate2D ToLocation(NSArray* data) {
+static CLLocationCoordinate2D ToPosition(NSArray* data) {
   return [FLTGoogleMapJSONConversions toLocation:data];
 }
 
 static GMSCoordinateBounds* ToLatLngBounds(NSArray* data) {
-  return [[GMSCoordinateBounds alloc] initWithCoordinate:ToLocation(data[0])
-                                              coordinate:ToLocation(data[1])];
+  return [[GMSCoordinateBounds alloc] initWithCoordinate:ToPosition(data[0])
+                                              coordinate:ToPosition(data[1])];
 }
 
 @interface FLTGoogleMapGroundOverlayController ()
@@ -76,17 +76,19 @@ static GMSCoordinateBounds* ToLatLngBounds(NSArray* data) {
 - (void)setBounds:(GMSCoordinateBounds *)bounds {
   self.groundOverlay.bounds = bounds;
 }
-- (void)setLocation:(CLLocationCoordinate2D)location width:(CGFloat)width height:(CGFloat)height {
-  self.groundOverlay.position = location;
+- (void)setPosition:(CLLocationCoordinate2D)position width:(CGFloat)width height:(CGFloat)height {
+  self.groundOverlay.position = position;
+  self.groundOverlay.width = width;
+  self.groundOverlay.height = height;
 }
-- (void)setBitmapDescriptor:(UIImage*)bd {
+- (void)setImage:(UIImage*)bd {
   self.groundOverlay.icon = bd;
 }
 - (void)setBearing:(CLLocationDirection)bearing {
   self.groundOverlay.bearing = bearing;
 }
-- (void)setOpacity:(float)opacity {
-  self.groundOverlay.opacity = opacity;
+- (void)setTransparency:(float)transparency {
+  self.groundOverlay.transparency = transparency;
 }
 
 - (void)interpretGroundOverlayOptions:(NSDictionary *)data
@@ -105,18 +107,18 @@ static GMSCoordinateBounds* ToLatLngBounds(NSArray* data) {
   }
   NSNumber* transparency = data[@"transparency"];
   if (transparency != nil) {
-    float opacity = 1 - ToFloat(transparency);
-    [self setOpacity:opacity];
+    float transparency = ToFloat(transparency);
+    [self setTransparency:transparency];
   }
   NSNumber* width = data[@"width"];
   NSNumber* height = data[@"height"];
-  NSArray* location = data[@"location"];
-  if (location) {
+  NSArray* position = data[@"position"];
+  if (position) {
     if (height != nil) {
-      [self setLocation:ToLocation(location) width:ToDouble(width) height:ToDouble(height)];
+      [self setPosition:ToPosition(position) width:ToDouble(width) height:ToDouble(height)];
     } else {
       if (width != nil) {
-        [self setLocation:ToLocation(location) width:ToDouble(width) height:0];
+        [self setPosition:ToPosition(position) width:ToDouble(width) height:0];
       }
     }
   }
@@ -128,10 +130,10 @@ static GMSCoordinateBounds* ToLatLngBounds(NSArray* data) {
   if (bearing && bearing != (id)[NSNull null]) {
     [self setBearing:ToFloat(bearing)];
   }
-  NSArray* bitmap = data[@"bitmap"];
+  NSArray* bitmap = data[@"image"];
   if (bitmap) {
     UIImage* image = ExtractBitmapDescriptor(registrar, bitmap);
-    [self setBitmapDescriptor:image];
+    [self setImage:image];
   }
 }
 

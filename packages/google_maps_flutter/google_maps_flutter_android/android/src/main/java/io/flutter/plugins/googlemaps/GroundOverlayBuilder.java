@@ -39,20 +39,22 @@ class GroundOverlayBuilder implements GroundOverlayOptionsSink {
     }
 
     @Override
-    public void setLocation(LatLng location, Float width, Float height, LatLngBounds bounds) {
-        if (height != null) {
-            groundOverlayOptions.position((LatLng) location, (float) width, (float) height);
-        } else {
-            if (width != null) {
-                groundOverlayOptions.position((LatLng) location, (float) width);
-            } else {
-                groundOverlayOptions.positionFromBounds((LatLngBounds) bounds);
-            }
-        }
+    public void setPosition(LatLng location, float width) {
+        groundOverlayOptions.position(location, width);
     }
 
     @Override
-    public void setBitmapDescriptor(BitmapDescriptor bd) {
+    public void setPosition(LatLng location, float width, float height) {
+        groundOverlayOptions.position(location, width, height);
+    }
+
+    @Override
+    public void setPosition(LatLngBounds bounds) {
+        groundOverlayOptions.positionFromBounds(bounds);
+    }
+
+    @Override
+    public void setImage(BitmapDescriptor bd) {
         groundOverlayOptions.image(bd);
     }
 

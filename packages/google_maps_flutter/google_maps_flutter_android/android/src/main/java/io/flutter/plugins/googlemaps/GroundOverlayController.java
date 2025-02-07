@@ -12,13 +12,11 @@ class GroundOverlayController implements GroundOverlayOptionsSink {
     private final String googleMapsGroundOverlayId;
     private boolean consumeTapEvents;
 
-
     GroundOverlayController(GroundOverlay groundOverlay, boolean consumeTapEvents) {
         this.groundOverlay = groundOverlay;
-        this.consumeTapEvents = consumeTapEvents;
         this.googleMapsGroundOverlayId = this.groundOverlay.getId();
+        setConsumeTapEvents(consumeTapEvents);
     }
-
 
     boolean consumeTapEvents() {
         return consumeTapEvents;
@@ -27,6 +25,7 @@ class GroundOverlayController implements GroundOverlayOptionsSink {
     @Override
     public void setConsumeTapEvents(boolean consumeTapEvents) {
         this.consumeTapEvents = consumeTapEvents;
+        this.groundOverlay.clickable = consumeTapEvents;
     }
 
     @Override
@@ -44,24 +43,22 @@ class GroundOverlayController implements GroundOverlayOptionsSink {
     }
 
     @Override
-    public void setLocation(LatLng location, Float width, Float height, LatLngBounds bounds) {
-        if (height != null && width != null) {
-            this.groundOverlay.setDimensions(width, height);
-        } else {
-            if (width != null) {
-                this.groundOverlay.setDimensions(width);
-            }
-        }
-        if (location != null) {
-            this.groundOverlay.setPosition(location);
-        }
-        if (bounds != null) {
-            this.groundOverlay.setPositionFromBounds(bounds);
-        }
+    public void setPosition(LatLng location, float width) {
+        this.groundOverlay.setPosition(location, width);
     }
 
     @Override
-    public void setBitmapDescriptor(BitmapDescriptor bd) {
+    public void setPosition(LatLng location, float width, float height) {
+        this.groundOverlay.setPosition(location, width, height);
+    }
+
+    @Override
+    public void setPosition(LatLngBounds bounds) {
+        this.groundOverlay.setPositionFromBounds(bounds);
+    }
+
+    @Override
+    public void setImage(BitmapDescriptor bd) {
         this.groundOverlay.setImage(bd);
     }
 

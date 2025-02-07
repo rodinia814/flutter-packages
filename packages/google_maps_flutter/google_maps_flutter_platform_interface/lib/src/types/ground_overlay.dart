@@ -25,54 +25,52 @@ class GroundOverlay implements MapsObject<GroundOverlay> {
   const GroundOverlay({
     required this.groundOverlayId,
     this.consumeTapEvents = false,
-    this.location,
+    this.position,
     this.zIndex = 0,
     this.onTap,
     this.visible = true,
-    this.bitmap,
+    this.image,
     this.bounds,
     this.width,
     this.height,
     this.bearing = 0.0,
-    this.anchor = Offset.zero,
-    this.opacity = 1.0,
+    this.transparency = 0.0,
   })  : assert(
   (height != null &&
       width != null &&
-      location != null &&
+      position != null &&
       bounds == null) ||
       (height == null &&
           width == null &&
-          location == null &&
+          position == null &&
           bounds != null) ||
       (height == null &&
           width != null &&
-          location != null &&
+          position != null &&
           bounds == null) ||
       (height == null &&
           width == null &&
-          location == null &&
+          position == null &&
           bounds == null),
   "Only one of the three types of positioning is allowed, please refer "
       "to the https://developers.google.com/maps/documentation/android-sdk/groundoverlay#add_an_overlay"),
-        assert(0.0 <= opacity && opacity <= 1.0);
+        assert(0.0 <= transparency && transparency <= 1.0);
 
   /// Creates an immutable representation of a [GroundOverlay] to draw on [GoogleMap]
   /// using [LatLngBounds]
   const GroundOverlay.fromBounds(
       this.bounds, {
         required this.groundOverlayId,
-        this.anchor = Offset.zero,
         this.bearing = 0.0,
-        this.bitmap,
+        this.image,
         this.consumeTapEvents = false,
         this.onTap,
-        this.opacity = 1.0,
+        this.transparency = 1.0,
         this.visible = true,
         this.zIndex = 0,
-      })  : assert(opacity == null ||
-      (0.0 <= opacity && opacity <= 1.0)),
-        location = null,
+      })  : assert(transparency == null ||
+      (0.0 <= transparency && transparency <= 1.0)),
+        position = null,
         height = null,
         width = null;
 
@@ -87,8 +85,8 @@ class GroundOverlay implements MapsObject<GroundOverlay> {
   /// If this is false, [onTap] callback will not be triggered.
   final bool consumeTapEvents;
 
-  /// Geographical location of the center of the ground overlay.
-  final LatLng? location;
+  /// Geographical position of the center of the ground overlay.
+  final LatLng? position;
 
   /// True if the ground overlay is visible.
   final bool visible;
@@ -104,7 +102,7 @@ class GroundOverlay implements MapsObject<GroundOverlay> {
   final VoidCallback? onTap;
 
   /// A description of the bitmap used to draw the ground overlay image.
-  final BitmapDescriptor? bitmap;
+  final BitmapDescriptor? image;
 
   /// Width of the ground overlay in meters
   final double? width;
@@ -118,11 +116,8 @@ class GroundOverlay implements MapsObject<GroundOverlay> {
   /// is aligned so that up is north.
   final double bearing;
 
-  /// The anchor is, by default, 50% from the top of the image and 50% from the left of the image.
-  final Offset anchor;
-
   /// Transparency of the ground overlay
-  final double opacity;
+  final double transparency;
 
   /// A latitude/longitude alignment of the ground overlay.
   final LatLngBounds? bounds;
@@ -130,28 +125,26 @@ class GroundOverlay implements MapsObject<GroundOverlay> {
   /// Creates a new [GroundOverlay] object whose values are the same as this instance,
   /// unless overwritten by the specified parameters.
   GroundOverlay copyWith({
-    BitmapDescriptor? bitmapParam,
-    Offset? anchorParam,
+    BitmapDescriptor? imageParam,
     int? zIndexParam,
     bool? visibleParam,
     bool? consumeTapEventsParam,
     double? widthParam,
     double? heightParam,
     double? bearingParam,
-    LatLng? locationParam,
+    LatLng? positionParam,
     LatLngBounds? boundsParam,
     VoidCallback? onTapParam,
-    double? opacityParam,
+    double? transparencyParam,
   }) {
     return GroundOverlay(
         groundOverlayId: groundOverlayId,
         consumeTapEvents: consumeTapEventsParam ?? consumeTapEvents,
-        bitmap: bitmapParam ?? bitmap,
-        opacity: opacityParam ?? opacity,
-        location: locationParam ?? location,
+        image: imageParam ?? image,
+        transparency: transparencyParam ?? transparency,
+        position: positionParam ?? position,
         visible: visibleParam ?? visible,
         bearing: bearingParam ?? bearing,
-        anchor: anchorParam ?? anchor,
         height: heightParam ?? height,
         bounds: boundsParam ?? bounds,
         zIndex: zIndexParam ?? zIndex,
@@ -174,17 +167,16 @@ class GroundOverlay implements MapsObject<GroundOverlay> {
 
     addIfPresent('groundOverlayId', groundOverlayId.value);
     addIfPresent('consumeTapEvents', consumeTapEvents);
-    addIfPresent('transparency', 1 - opacity);
+    addIfPresent('transparency', transparency);
     addIfPresent('bearing', bearing);
     addIfPresent('visible', visible);
     addIfPresent('zIndex', zIndex);
     addIfPresent('height', height);
-    addIfPresent('anchor', _offsetToJson(anchor));
     addIfPresent('bounds', bounds?.toJson());
-    addIfPresent('bitmap', bitmap?.toJson());
+    addIfPresent('image', image?.toJson());
     addIfPresent('width', width);
-    if (location != null) {
-      json['location'] = _locationToJson();
+    if (position != null) {
+      json['position'] = _positionToJson();
     }
     return json;
   }
@@ -195,16 +187,15 @@ class GroundOverlay implements MapsObject<GroundOverlay> {
     if (other.runtimeType != runtimeType) return false;
     final GroundOverlay typedOther = other as GroundOverlay;
     return groundOverlayId == typedOther.groundOverlayId &&
-        bitmap == typedOther.bitmap &&
+        image == typedOther.image &&
         consumeTapEvents == typedOther.consumeTapEvents &&
-        opacity == typedOther.opacity &&
-        location == typedOther.location &&
+        transparency == typedOther.transparency &&
+        position == typedOther.position &&
         bearing == typedOther.bearing &&
         visible == typedOther.visible &&
         height == typedOther.height &&
         zIndex == typedOther.zIndex &&
         bounds == typedOther.bounds &&
-        anchor == typedOther.anchor &&
         width == typedOther.width &&
         onTap == typedOther.onTap;
   }
@@ -212,12 +203,5 @@ class GroundOverlay implements MapsObject<GroundOverlay> {
   @override
   int get hashCode => groundOverlayId.hashCode;
 
-  dynamic _locationToJson() => location?.toJson();
-
-  dynamic _offsetToJson(Offset offset) {
-    if (offset == null) {
-      return null;
-    }
-    return <dynamic>[offset.dx, offset.dy];
-  }
+  dynamic _positionToJson() => position?.toJson();
 }

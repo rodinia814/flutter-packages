@@ -320,31 +320,29 @@ class PlatformTileOverlay {
 class PlatformGroundOverlay {
   PlatformGroundOverlay({
     required this.groundOverlayId,
-    required this.consumeTapEvents,
-    required this.location,
-    required this.zIndex,
-    required this.visible,
-    required this.bitmap,
-    required this.bounds,
+    required this.position,
     required this.width,
     required this.height,
+    required this.bounds,
+    required this.zIndex,
+    required this.visible,
+    required this.consumeTapEvents,
+    required this.image,
     required this.bearing,
-    required this.anchor,
-    required this.opacity,
+    required this.transparency,
   });
 
-  String groundOverlayId;
-  bool consumeTapEvents;
-  PlatformLatLng location;
-  int zIndex;
-  bool visible;
-  PlatformBitmap bitmap;
-  PlatformLatLngBounds bounds;
-  double width;
-  double height;
-  double bearing;
-  PlatformPoint anchor;
-  double opacity;
+  final String groundOverlayId;
+  final PlatformLatLng? position;
+  final double width;
+  final double height;
+  final PlatformLatLngBounds? bounds;
+  final int zIndex;
+  final bool visible;
+  final bool consumeTapEvents;
+  final PlatformBitmap image;
+  final double bearing;
+  final double transparency;
 
 }
 

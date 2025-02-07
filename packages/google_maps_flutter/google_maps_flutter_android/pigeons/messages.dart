@@ -343,31 +343,29 @@ class PlatformTileOverlay {
 class PlatformGroundOverlay {
   PlatformGroundOverlay({
     required this.groundOverlayId,
-    required this.consumeTapEvents,
-    required this.location,
-    required this.zIndex,
-    required this.visible,
-    required this.bitmap,
-    required this.bounds,
+    required this.position,
     required this.width,
     required this.height,
+    required this.bounds,
+    required this.zIndex,
+    required this.visible,
+    required this.consumeTapEvents,
+    required this.image,
     required this.bearing,
-    required this.anchor,
-    required this.opacity,
+    required this.transparency,
   });
 
   final String groundOverlayId;
-  final bool consumeTapEvents;
-  final PlatformLatLng location;
+  final PlatformLatLng? position;
+  final double? width;
+  final double? height;
+  final PlatformLatLngBounds? bounds;
   final int zIndex;
   final bool visible;
-  final PlatformBitmap bitmap;
-  final PlatformLatLngBounds bounds;
-  final double width;
-  final double height;
+  final bool consumeTapEvents;
+  final PlatformBitmap image;
   final double bearing;
-  final PlatformDoublePair anchor;
-  final double opacity;
+  final double transparency;
 }
 
 /// Pigeon equivalent of Flutter's EdgeInsets.

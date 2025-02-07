@@ -3148,30 +3148,44 @@ public class Messages {
       this.groundOverlayId = setterArg;
     }
 
-    private @NonNull Boolean consumeTapEvents;
+    private @Nullable PlatformLatLng position;
 
-    public @NonNull Boolean getConsumeTapEvents() {
-      return consumeTapEvents;
+    public @Nullable PlatformLatLng getPosition() {
+      return position;
     }
 
-    public void setConsumeTapEvents(@NonNull Boolean setterArg) {
-      if (setterArg == null) {
-        throw new IllegalStateException("Nonnull field \"consumeTapEvents\" is null.");
-      }
-      this.consumeTapEvents = setterArg;
+    public void setPosition(@Nullable PlatformLatLng setterArg) {
+      this.position = setterArg;
     }
 
-    private @NonNull PlatformLatLng location;
+    private @Nullable Double width;
 
-    public @NonNull PlatformLatLng getLocation() {
-      return location;
+    public @Nullable Double getWidth() {
+      return width;
     }
 
-    public void setLocation(@NonNull PlatformLatLng setterArg) {
-      if (setterArg == null) {
-        throw new IllegalStateException("Nonnull field \"location\" is null.");
-      }
-      this.location = setterArg;
+    public void setWidth(@Nullable Double setterArg) {
+      this.width = setterArg;
+    }
+
+    private @Nullable Double height;
+
+    public @Nullable Double getHeight() {
+      return height;
+    }
+
+    public void setHeight(@Nullable Double setterArg) {
+      this.height = setterArg;
+    }
+
+    private @Nullable PlatformLatLngBounds bounds;
+
+    public @Nullable PlatformLatLngBounds getBounds() {
+      return bounds;
+    }
+
+    public void setBounds(@Nullable PlatformLatLngBounds setterArg) {
+      this.bounds = setterArg;
     }
 
     private @NonNull Long zIndex;
@@ -3200,56 +3214,30 @@ public class Messages {
       this.visible = setterArg;
     }
 
-    private @NonNull PlatformBitmap bitmap;
+    private @NonNull Boolean consumeTapEvents;
 
-    public @NonNull PlatformBitmap getBitmap() {
-      return bitmap;
+    public @NonNull Boolean getConsumeTapEvents() {
+      return consumeTapEvents;
     }
 
-    public void setBitmap(@NonNull PlatformBitmap setterArg) {
+    public void setConsumeTapEvents(@NonNull Boolean setterArg) {
       if (setterArg == null) {
-        throw new IllegalStateException("Nonnull field \"bitmap\" is null.");
+        throw new IllegalStateException("Nonnull field \"consumeTapEvents\" is null.");
       }
-      this.bitmap = setterArg;
+      this.consumeTapEvents = setterArg;
     }
 
-    private @NonNull PlatformLatLngBounds bounds;
+    private @NonNull PlatformBitmap image;
 
-    public @NonNull PlatformLatLngBounds getBounds() {
-      return bounds;
+    public @NonNull PlatformBitmap getImage() {
+      return image;
     }
 
-    public void setBounds(@NonNull PlatformLatLngBounds setterArg) {
+    public void setImage(@NonNull PlatformBitmap setterArg) {
       if (setterArg == null) {
-        throw new IllegalStateException("Nonnull field \"bounds\" is null.");
+        throw new IllegalStateException("Nonnull field \"image\" is null.");
       }
-      this.bounds = setterArg;
-    }
-
-    private @NonNull Double width;
-
-    public @NonNull Double getWidth() {
-      return width;
-    }
-
-    public void setWidth(@NonNull Double setterArg) {
-      if (setterArg == null) {
-        throw new IllegalStateException("Nonnull field \"width\" is null.");
-      }
-      this.width = setterArg;
-    }
-
-    private @NonNull Double height;
-
-    public @NonNull Double getHeight() {
-      return height;
-    }
-
-    public void setHeight(@NonNull Double setterArg) {
-      if (setterArg == null) {
-        throw new IllegalStateException("Nonnull field \"height\" is null.");
-      }
-      this.height = setterArg;
+      this.image = setterArg;
     }
 
     private @NonNull Double bearing;
@@ -3265,30 +3253,17 @@ public class Messages {
       this.bearing = setterArg;
     }
 
-    private @NonNull PlatformDoublePair anchor;
+    private @NonNull Double transparency;
 
-    public @NonNull PlatformDoublePair getAnchor() {
-      return anchor;
+    public @NonNull Double getTransparency() {
+      return transparency;
     }
 
-    public void setAnchor(@NonNull PlatformDoublePair setterArg) {
+    public void setTransparency(@NonNull Double setterArg) {
       if (setterArg == null) {
-        throw new IllegalStateException("Nonnull field \"anchor\" is null.");
+        throw new IllegalStateException("Nonnull field \"transparency\" is null.");
       }
-      this.anchor = setterArg;
-    }
-
-    private @NonNull Double opacity;
-
-    public @NonNull Double getOpacity() {
-      return opacity;
-    }
-
-    public void setOpacity(@NonNull Double setterArg) {
-      if (setterArg == null) {
-        throw new IllegalStateException("Nonnull field \"opacity\" is null.");
-      }
-      this.opacity = setterArg;
+      this.transparency = setterArg;
     }
 
     /** Constructor is non-public to enforce null safety; use Builder. */
@@ -3299,12 +3274,12 @@ public class Messages {
       if (this == o) { return true; }
       if (o == null || getClass() != o.getClass()) { return false; }
       PlatformGroundOverlay that = (PlatformGroundOverlay) o;
-      return groundOverlayId.equals(that.groundOverlayId) && consumeTapEvents.equals(that.consumeTapEvents) && location.equals(that.location) && zIndex.equals(that.zIndex) && visible.equals(that.visible) && bitmap.equals(that.bitmap) && bounds.equals(that.bounds) && width.equals(that.width) && height.equals(that.height) && bearing.equals(that.bearing) && anchor.equals(that.anchor) && opacity.equals(that.opacity);
+      return groundOverlayId.equals(that.groundOverlayId) && Objects.equals(position, that.position) && Objects.equals(width, that.width) && Objects.equals(height, that.height) && Objects.equals(bounds, that.bounds) && zIndex.equals(that.zIndex) && visible.equals(that.visible) && consumeTapEvents.equals(that.consumeTapEvents) && image.equals(that.image) && bearing.equals(that.bearing) && transparency.equals(that.transparency);
     }
 
     @Override
     public int hashCode() {
-      return Objects.hash(groundOverlayId, consumeTapEvents, location, zIndex, visible, bitmap, bounds, width, height, bearing, anchor, opacity);
+      return Objects.hash(groundOverlayId, position, width, height, bounds, zIndex, visible, consumeTapEvents, image, bearing, transparency);
     }
 
     public static final class Builder {
@@ -3317,19 +3292,35 @@ public class Messages {
         return this;
       }
 
-      private @Nullable Boolean consumeTapEvents;
+      private @Nullable PlatformLatLng position;
 
       @CanIgnoreReturnValue
-      public @NonNull Builder setConsumeTapEvents(@NonNull Boolean setterArg) {
-        this.consumeTapEvents = setterArg;
+      public @NonNull Builder setPosition(@Nullable PlatformLatLng setterArg) {
+        this.position = setterArg;
         return this;
       }
 
-      private @Nullable PlatformLatLng location;
+      private @Nullable Double width;
 
       @CanIgnoreReturnValue
-      public @NonNull Builder setLocation(@NonNull PlatformLatLng setterArg) {
-        this.location = setterArg;
+      public @NonNull Builder setWidth(@Nullable Double setterArg) {
+        this.width = setterArg;
+        return this;
+      }
+
+      private @Nullable Double height;
+
+      @CanIgnoreReturnValue
+      public @NonNull Builder setHeight(@Nullable Double setterArg) {
+        this.height = setterArg;
+        return this;
+      }
+
+      private @Nullable PlatformLatLngBounds bounds;
+
+      @CanIgnoreReturnValue
+      public @NonNull Builder setBounds(@Nullable PlatformLatLngBounds setterArg) {
+        this.bounds = setterArg;
         return this;
       }
 
@@ -3349,35 +3340,19 @@ public class Messages {
         return this;
       }
 
-      private @Nullable PlatformBitmap bitmap;
+      private @Nullable Boolean consumeTapEvents;
 
       @CanIgnoreReturnValue
-      public @NonNull Builder setBitmap(@NonNull PlatformBitmap setterArg) {
-        this.bitmap = setterArg;
+      public @NonNull Builder setConsumeTapEvents(@NonNull Boolean setterArg) {
+        this.consumeTapEvents = setterArg;
         return this;
       }
 
-      private @Nullable PlatformLatLngBounds bounds;
+      private @Nullable PlatformBitmap image;
 
       @CanIgnoreReturnValue
-      public @NonNull Builder setBounds(@NonNull PlatformLatLngBounds setterArg) {
-        this.bounds = setterArg;
-        return this;
-      }
-
-      private @Nullable Double width;
-
-      @CanIgnoreReturnValue
-      public @NonNull Builder setWidth(@NonNull Double setterArg) {
-        this.width = setterArg;
-        return this;
-      }
-
-      private @Nullable Double height;
-
-      @CanIgnoreReturnValue
-      public @NonNull Builder setHeight(@NonNull Double setterArg) {
-        this.height = setterArg;
+      public @NonNull Builder setImage(@NonNull PlatformBitmap setterArg) {
+        this.image = setterArg;
         return this;
       }
 
@@ -3389,55 +3364,45 @@ public class Messages {
         return this;
       }
 
-      private @Nullable PlatformDoublePair anchor;
+      private @Nullable Double transparency;
 
       @CanIgnoreReturnValue
-      public @NonNull Builder setAnchor(@NonNull PlatformDoublePair setterArg) {
-        this.anchor = setterArg;
-        return this;
-      }
-
-      private @Nullable Double opacity;
-
-      @CanIgnoreReturnValue
-      public @NonNull Builder setOpacity(@NonNull Double setterArg) {
-        this.opacity = setterArg;
+      public @NonNull Builder setTransparency(@NonNull Double setterArg) {
+        this.transparency = setterArg;
         return this;
       }
 
       public @NonNull PlatformGroundOverlay build() {
         PlatformGroundOverlay pigeonReturn = new PlatformGroundOverlay();
         pigeonReturn.setGroundOverlayId(groundOverlayId);
-        pigeonReturn.setConsumeTapEvents(consumeTapEvents);
-        pigeonReturn.setLocation(location);
-        pigeonReturn.setZIndex(zIndex);
-        pigeonReturn.setVisible(visible);
-        pigeonReturn.setBitmap(bitmap);
-        pigeonReturn.setBounds(bounds);
+        pigeonReturn.setPosition(position);
         pigeonReturn.setWidth(width);
         pigeonReturn.setHeight(height);
+        pigeonReturn.setBounds(bounds);
+        pigeonReturn.setZIndex(zIndex);
+        pigeonReturn.setVisible(visible);
+        pigeonReturn.setConsumeTapEvents(consumeTapEvents);
+        pigeonReturn.setImage(image);
         pigeonReturn.setBearing(bearing);
-        pigeonReturn.setAnchor(anchor);
-        pigeonReturn.setOpacity(opacity);
+        pigeonReturn.setTransparency(transparency);
         return pigeonReturn;
       }
     }
 
     @NonNull
     ArrayList<Object> toList() {
-      ArrayList<Object> toListResult = new ArrayList<>(12);
+      ArrayList<Object> toListResult = new ArrayList<>(11);
       toListResult.add(groundOverlayId);
-      toListResult.add(consumeTapEvents);
-      toListResult.add(location);
-      toListResult.add(zIndex);
-      toListResult.add(visible);
-      toListResult.add(bitmap);
-      toListResult.add(bounds);
+      toListResult.add(position);
       toListResult.add(width);
       toListResult.add(height);
+      toListResult.add(bounds);
+      toListResult.add(zIndex);
+      toListResult.add(visible);
+      toListResult.add(consumeTapEvents);
+      toListResult.add(image);
       toListResult.add(bearing);
-      toListResult.add(anchor);
-      toListResult.add(opacity);
+      toListResult.add(transparency);
       return toListResult;
     }
 
@@ -3445,28 +3410,26 @@ public class Messages {
       PlatformGroundOverlay pigeonResult = new PlatformGroundOverlay();
       Object groundOverlayId = pigeonVar_list.get(0);
       pigeonResult.setGroundOverlayId((String) groundOverlayId);
-      Object consumeTapEvents = pigeonVar_list.get(1);
-      pigeonResult.setConsumeTapEvents((Boolean) consumeTapEvents);
-      Object location = pigeonVar_list.get(2);
-      pigeonResult.setLocation((PlatformLatLng) location);
-      Object zIndex = pigeonVar_list.get(3);
-      pigeonResult.setZIndex((Long) zIndex);
-      Object visible = pigeonVar_list.get(4);
-      pigeonResult.setVisible((Boolean) visible);
-      Object bitmap = pigeonVar_list.get(5);
-      pigeonResult.setBitmap((PlatformBitmap) bitmap);
-      Object bounds = pigeonVar_list.get(6);
-      pigeonResult.setBounds((PlatformLatLngBounds) bounds);
-      Object width = pigeonVar_list.get(7);
+      Object position = pigeonVar_list.get(1);
+      pigeonResult.setPosition((PlatformLatLng) position);
+      Object width = pigeonVar_list.get(2);
       pigeonResult.setWidth((Double) width);
-      Object height = pigeonVar_list.get(8);
+      Object height = pigeonVar_list.get(3);
       pigeonResult.setHeight((Double) height);
+      Object bounds = pigeonVar_list.get(4);
+      pigeonResult.setBounds((PlatformLatLngBounds) bounds);
+      Object zIndex = pigeonVar_list.get(5);
+      pigeonResult.setZIndex((Long) zIndex);
+      Object visible = pigeonVar_list.get(6);
+      pigeonResult.setVisible((Boolean) visible);
+      Object consumeTapEvents = pigeonVar_list.get(7);
+      pigeonResult.setConsumeTapEvents((Boolean) consumeTapEvents);
+      Object image = pigeonVar_list.get(8);
+      pigeonResult.setImage((PlatformBitmap) image);
       Object bearing = pigeonVar_list.get(9);
       pigeonResult.setBearing((Double) bearing);
-      Object anchor = pigeonVar_list.get(10);
-      pigeonResult.setAnchor((PlatformDoublePair) anchor);
-      Object opacity = pigeonVar_list.get(11);
-      pigeonResult.setOpacity((Double) opacity);
+      Object transparency = pigeonVar_list.get(10);
+      pigeonResult.setTransparency((Double) transparency);
       return pigeonResult;
     }
   }

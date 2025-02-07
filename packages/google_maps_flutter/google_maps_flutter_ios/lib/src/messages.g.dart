@@ -822,57 +822,53 @@ class PlatformTileOverlay {
 class PlatformGroundOverlay {
   PlatformGroundOverlay({
     required this.groundOverlayId,
-    required this.consumeTapEvents,
-    required this.location,
-    required this.zIndex,
-    required this.visible,
-    required this.bitmap,
-    required this.bounds,
+    this.position,
     required this.width,
     required this.height,
+    this.bounds,
+    required this.zIndex,
+    required this.visible,
+    required this.consumeTapEvents,
+    required this.image,
     required this.bearing,
-    required this.anchor,
-    required this.opacity,
+    required this.transparency,
   });
 
   String groundOverlayId;
 
-  bool consumeTapEvents;
-
-  PlatformLatLng location;
-
-  int zIndex;
-
-  bool visible;
-
-  PlatformBitmap bitmap;
-
-  PlatformLatLngBounds bounds;
+  PlatformLatLng? position;
 
   double width;
 
   double height;
 
+  PlatformLatLngBounds? bounds;
+
+  int zIndex;
+
+  bool visible;
+
+  bool consumeTapEvents;
+
+  PlatformBitmap image;
+
   double bearing;
 
-  PlatformPoint anchor;
-
-  double opacity;
+  double transparency;
 
   Object encode() {
     return <Object?>[
       groundOverlayId,
-      consumeTapEvents,
-      location,
-      zIndex,
-      visible,
-      bitmap,
-      bounds,
+      position,
       width,
       height,
+      bounds,
+      zIndex,
+      visible,
+      consumeTapEvents,
+      image,
       bearing,
-      anchor,
-      opacity,
+      transparency,
     ];
   }
 
@@ -880,17 +876,16 @@ class PlatformGroundOverlay {
     result as List<Object?>;
     return PlatformGroundOverlay(
       groundOverlayId: result[0]! as String,
-      consumeTapEvents: result[1]! as bool,
-      location: result[2]! as PlatformLatLng,
-      zIndex: result[3]! as int,
-      visible: result[4]! as bool,
-      bitmap: result[5]! as PlatformBitmap,
-      bounds: result[6]! as PlatformLatLngBounds,
-      width: result[7]! as double,
-      height: result[8]! as double,
+      position: result[1] as PlatformLatLng?,
+      width: result[2]! as double,
+      height: result[3]! as double,
+      bounds: result[4] as PlatformLatLngBounds?,
+      zIndex: result[5]! as int,
+      visible: result[6]! as bool,
+      consumeTapEvents: result[7]! as bool,
+      image: result[8]! as PlatformBitmap,
       bearing: result[9]! as double,
-      anchor: result[10]! as PlatformPoint,
-      opacity: result[11]! as double,
+      transparency: result[10]! as double,
     );
   }
 }
