@@ -832,11 +832,11 @@ class GoogleMapsFlutterAndroid extends GoogleMapsFlutterPlatform {
     return PlatformGroundOverlay(
         groundOverlayId: groundOverlay.groundOverlayId.value,
         consumeTapEvents: groundOverlay.consumeTapEvents,
-        position: groundOverlay.position == null ? null : _platformLatLngFromLatLng(groundOverlay.position),
+        position: groundOverlay.position == null ? null : _platformLatLngFromLatLng(groundOverlay.position!),
         zIndex: groundOverlay.zIndex,
         visible: groundOverlay.visible,
         image: platformBitmapFromBitmapDescriptor(groundOverlay.image!),
-        bounds: groundOverlay.bounds == null ? null : _platformLatLngBoundsFromLatLngBounds(groundOverlay.bounds),
+        bounds: groundOverlay.bounds == null ? null : _platformLatLngBoundsFromLatLngBounds(groundOverlay.bounds!),
         width: groundOverlay.width,
         height: groundOverlay.height,
         bearing: groundOverlay.bearing,

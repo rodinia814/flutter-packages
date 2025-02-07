@@ -990,8 +990,8 @@ static id GetNullableObjectAtIndex(NSArray<id> *array, NSInteger key) {
 @implementation FGMPlatformGroundOverlay
 + (instancetype)makeWithGroundOverlayId:(NSString *)groundOverlayId
     position:(nullable FGMPlatformLatLng *)position
-    width:(double )width
-    height:(double )height
+    width:(nullable NSNumber *)width
+    height:(nullable NSNumber *)height
     bounds:(nullable FGMPlatformLatLngBounds *)bounds
     zIndex:(NSInteger )zIndex
     visible:(BOOL )visible
@@ -1017,8 +1017,8 @@ static id GetNullableObjectAtIndex(NSArray<id> *array, NSInteger key) {
   FGMPlatformGroundOverlay *pigeonResult = [[FGMPlatformGroundOverlay alloc] init];
   pigeonResult.groundOverlayId = GetNullableObjectAtIndex(list, 0);
   pigeonResult.position = GetNullableObjectAtIndex(list, 1);
-  pigeonResult.width = [GetNullableObjectAtIndex(list, 2) doubleValue];
-  pigeonResult.height = [GetNullableObjectAtIndex(list, 3) doubleValue];
+  pigeonResult.width = GetNullableObjectAtIndex(list, 2);
+  pigeonResult.height = GetNullableObjectAtIndex(list, 3);
   pigeonResult.bounds = GetNullableObjectAtIndex(list, 4);
   pigeonResult.zIndex = [GetNullableObjectAtIndex(list, 5) integerValue];
   pigeonResult.visible = [GetNullableObjectAtIndex(list, 6) boolValue];
@@ -1035,8 +1035,8 @@ static id GetNullableObjectAtIndex(NSArray<id> *array, NSInteger key) {
   return @[
     self.groundOverlayId ?: [NSNull null],
     self.position ?: [NSNull null],
-    @(self.width),
-    @(self.height),
+    self.width ?: [NSNull null],
+    self.height ?: [NSNull null],
     self.bounds ?: [NSNull null],
     @(self.zIndex),
     @(self.visible),

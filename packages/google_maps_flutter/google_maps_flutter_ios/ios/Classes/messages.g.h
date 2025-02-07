@@ -405,8 +405,8 @@ typedef NS_ENUM(NSUInteger, FGMPlatformMapBitmapScaling) {
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)makeWithGroundOverlayId:(NSString *)groundOverlayId
     position:(nullable FGMPlatformLatLng *)position
-    width:(double )width
-    height:(double )height
+    width:(nullable NSNumber *)width
+    height:(nullable NSNumber *)height
     bounds:(nullable FGMPlatformLatLngBounds *)bounds
     zIndex:(NSInteger )zIndex
     visible:(BOOL )visible
@@ -416,8 +416,8 @@ typedef NS_ENUM(NSUInteger, FGMPlatformMapBitmapScaling) {
     transparency:(double )transparency;
 @property(nonatomic, copy) NSString * groundOverlayId;
 @property(nonatomic, strong, nullable) FGMPlatformLatLng * position;
-@property(nonatomic, assign) double  width;
-@property(nonatomic, assign) double  height;
+@property(nonatomic, strong, nullable) NSNumber * width;
+@property(nonatomic, strong, nullable) NSNumber * height;
 @property(nonatomic, strong, nullable) FGMPlatformLatLngBounds * bounds;
 @property(nonatomic, assign) NSInteger  zIndex;
 @property(nonatomic, assign) BOOL  visible;

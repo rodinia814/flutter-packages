@@ -823,8 +823,8 @@ class PlatformGroundOverlay {
   PlatformGroundOverlay({
     required this.groundOverlayId,
     this.position,
-    required this.width,
-    required this.height,
+    this.width,
+    this.height,
     this.bounds,
     required this.zIndex,
     required this.visible,
@@ -838,9 +838,9 @@ class PlatformGroundOverlay {
 
   PlatformLatLng? position;
 
-  double width;
+  double? width;
 
-  double height;
+  double? height;
 
   PlatformLatLngBounds? bounds;
 
@@ -877,8 +877,8 @@ class PlatformGroundOverlay {
     return PlatformGroundOverlay(
       groundOverlayId: result[0]! as String,
       position: result[1] as PlatformLatLng?,
-      width: result[2]! as double,
-      height: result[3]! as double,
+      width: result[2] as double?,
+      height: result[3] as double?,
       bounds: result[4] as PlatformLatLngBounds?,
       zIndex: result[5]! as int,
       visible: result[6]! as bool,

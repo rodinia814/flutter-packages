@@ -25,7 +25,7 @@ class GroundOverlayController implements GroundOverlayOptionsSink {
     @Override
     public void setConsumeTapEvents(boolean consumeTapEvents) {
         this.consumeTapEvents = consumeTapEvents;
-        this.groundOverlay.clickable = consumeTapEvents;
+        this.groundOverlay.setClickable(consumeTapEvents);
     }
 
     @Override
@@ -44,12 +44,14 @@ class GroundOverlayController implements GroundOverlayOptionsSink {
 
     @Override
     public void setPosition(LatLng location, float width) {
-        this.groundOverlay.setPosition(location, width);
+        this.groundOverlay.setPosition(location);
+        this.groundOverlay.setDimensions(width);
     }
 
     @Override
     public void setPosition(LatLng location, float width, float height) {
-        this.groundOverlay.setPosition(location, width, height);
+        this.groundOverlay.setPosition(location);
+        this.groundOverlay.setDimensions(width, height);
     }
 
     @Override

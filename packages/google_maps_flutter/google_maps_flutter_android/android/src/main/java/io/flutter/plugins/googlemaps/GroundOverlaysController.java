@@ -1,7 +1,6 @@
 package io.flutter.plugins.googlemaps;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.GroundOverlay;
 import com.google.android.gms.maps.model.GroundOverlayOptions;
@@ -77,7 +76,7 @@ class GroundOverlaysController {
         if (groundOverlay == null) {
             return;
         }
-        String groundOverlayId = getGroundOverlayId(groundOverlay);
+        String groundOverlayId = groundOverlay.getGroundOverlayId();
         GroundOverlayController groundOverlayController = groundOverlayIdToController.get(groundOverlayId);
         if (groundOverlayController != null) {
             Convert.interpretGroundOverlayOptions(groundOverlay, groundOverlayController);
@@ -100,11 +99,5 @@ class GroundOverlaysController {
                 googleMapsGroundOverlayIdToDartOverlayId.remove(groundOverlayController.getGoogleMapsGroundOverlayId());
             }
         }
-    }
-
-    @SuppressWarnings("unchecked")
-    private static String getGroundOverlayId(Object groundOverlay) {
-        Map<String, Object> overlayMap = (Map<String, Object>) groundOverlay;
-        return (String) overlayMap.get("groundOverlayId");
     }
 }

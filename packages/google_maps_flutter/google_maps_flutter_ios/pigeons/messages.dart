@@ -334,8 +334,8 @@ class PlatformGroundOverlay {
 
   final String groundOverlayId;
   final PlatformLatLng? position;
-  final double width;
-  final double height;
+  final double? width;
+  final double? height;
   final PlatformLatLngBounds? bounds;
   final int zIndex;
   final bool visible;
