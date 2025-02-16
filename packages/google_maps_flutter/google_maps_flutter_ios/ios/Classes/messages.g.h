@@ -776,6 +776,8 @@ extern void SetUpFGMMapsApiWithSuffix(id<FlutterBinaryMessenger> binaryMessenger
 - (void)didTapCluster:(FGMPlatformCluster *)cluster completion:(void (^)(FlutterError *_Nullable))completion;
 /// Called when a polygon is tapped.
 - (void)didTapPolygonWithIdentifier:(NSString *)polygonId completion:(void (^)(FlutterError *_Nullable))completion;
+/// Called when a ground overlay is tapped.
+- (void)didTapGroundOverlayWithIdentifier:(NSString *)groundOverlayId completion:(void (^)(FlutterError *_Nullable))completion;
 /// Called when a polyline is tapped.
 - (void)didTapPolylineWithIdentifier:(NSString *)polylineId completion:(void (^)(FlutterError *_Nullable))completion;
 /// Called to get data for a map tile.

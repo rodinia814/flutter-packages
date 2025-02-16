@@ -750,6 +750,10 @@ abstract class MapsCallbackApi {
   @ObjCSelector('didTapPolygonWithIdentifier:')
   void onPolygonTap(String polygonId);
 
+  /// Called when a ground overlay is tapped.
+  @ObjCSelector('didTapGroundOverlayWithIdentifier:')
+  void onGroundOverlayTap(String groundOverlayId);
+
   /// Called when a polyline is tapped.
   @ObjCSelector('didTapPolylineWithIdentifier:')
   void onPolylineTap(String polylineId);

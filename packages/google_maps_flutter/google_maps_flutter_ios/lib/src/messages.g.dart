@@ -2384,6 +2384,9 @@ abstract class MapsCallbackApi {
   /// Called when a polygon is tapped.
   void onPolygonTap(String polygonId);
 
+  /// Called when a ground overlay is tapped.
+  void onGroundOverlayTap(String groundOverlayId);
+
   /// Called when a polyline is tapped.
   void onPolylineTap(String polylineId);
 
@@ -2705,6 +2708,31 @@ abstract class MapsCallbackApi {
               'Argument for dev.flutter.pigeon.google_maps_flutter_ios.MapsCallbackApi.onPolygonTap was null, expected non-null String.');
           try {
             api.onPolygonTap(arg_polygonId!);
+            return wrapResponse(empty: true);
+          } on PlatformException catch (e) {
+            return wrapResponse(error: e);
+          }          catch (e) {
+            return wrapResponse(error: PlatformException(code: 'error', message: e.toString()));
+          }
+        });
+      }
+    }
+    {
+      final BasicMessageChannel<Object?> pigeonVar_channel = BasicMessageChannel<Object?>(
+          'dev.flutter.pigeon.google_maps_flutter_ios.MapsCallbackApi.onGroundOverlayTap$messageChannelSuffix', pigeonChannelCodec,
+          binaryMessenger: binaryMessenger);
+      if (api == null) {
+        pigeonVar_channel.setMessageHandler(null);
+      } else {
+        pigeonVar_channel.setMessageHandler((Object? message) async {
+          assert(message != null,
+          'Argument for dev.flutter.pigeon.google_maps_flutter_ios.MapsCallbackApi.onGroundOverlayTap was null.');
+          final List<Object?> args = (message as List<Object?>?)!;
+          final String? arg_groundOverlayId = (args[0] as String?);
+          assert(arg_groundOverlayId != null,
+              'Argument for dev.flutter.pigeon.google_maps_flutter_ios.MapsCallbackApi.onGroundOverlayTap was null, expected non-null String.');
+          try {
+            api.onGroundOverlayTap(arg_groundOverlayId!);
             return wrapResponse(empty: true);
           } on PlatformException catch (e) {
             return wrapResponse(error: e);

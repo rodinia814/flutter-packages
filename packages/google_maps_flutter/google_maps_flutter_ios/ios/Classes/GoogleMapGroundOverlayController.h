@@ -5,29 +5,27 @@
 #import <Flutter/Flutter.h>
 #import <GoogleMaps/GoogleMaps.h>
 
+#import "messages.g.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 // Defines ground overlay controllable by Flutter.
 @interface FLTGoogleMapGroundOverlayController : NSObject
 @property(atomic, readonly) NSString* groundOverlayId;
-- (instancetype)initGroundOverlayWithPosition:(CLLocationCoordinate2D)position
-                                         icon:(UIImage*)icon
-                                    zoomLevel:(CGFloat)zoomLevel
-                              groundOverlayId:(NSString*)groundOverlayId
+- (instancetype)initWithGroundOverlay:(FGMPlatformGroundOverlay *)groundOverlay
                                       mapView:(GMSMapView*)mapView;
-- (instancetype)initGroundOverlayWithBounds:(GMSCoordinateBounds*)bounds
-                                       icon:(UIImage*)icon
-                            groundOverlayId:(NSString*)groundOverlayId
-                                    mapView:(GMSMapView*)mapView;
 - (void)removeGroundOverlay;
 @end
 
 @interface FLTGroundOverlaysController : NSObject
-- (instancetype)init:(FlutterMethodChannel*)methodChannel
-             mapView:(GMSMapView*)mapView
-           registrar:(NSObject<FlutterPluginRegistrar>*)registrar;
-- (void)addGroundOverlays:(NSArray*)groundOverlaysToAdd;
-- (void)changeGroundOverlays:(NSArray*)groundOverlaysToChange;
-- (void)removeGroundOverlayIds:(NSArray*)groundOverlayIdsToRemove;
+- (instancetype)initWithMapView:(GMSMapView*)mapView
+                callbackHandler:(FGMMapsCallbackApi *)callbackHandler
+                registrar:(NSObject<FlutterPluginRegistrar>*)registrar;
+- (void)addGroundOverlays:(NSArray<FGMPlatformGroundOverlay *> *)groundOverlaysToAdd;
+- (void)changeGroundOverlays:(NSArray<FGMPlatformGroundOverlay *> *)groundOverlaysToChange;
+- (void)removeGroundOverlayIds:(NSArray<NSString *> *)groundOverlayIdsToRemove;
 - (void)onGroundOverlayTap:(NSString*)groundOverlayId;
 - (bool)hasGroundOverlayWithId:(NSString*)groundOverlayId;
 @end
+
+NS_ASSUME_NONNULL_END

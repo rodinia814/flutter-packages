@@ -2617,6 +2617,25 @@ void SetUpFGMMapsApiWithSuffix(id<FlutterBinaryMessenger> binaryMessenger, NSObj
     } 
   }];
 }
+- (void)didTapGroundOverlayWithIdentifier:(NSString *)arg_groundOverlayId completion:(void (^)(FlutterError *_Nullable))completion {
+  NSString *channelName = [NSString stringWithFormat:@"%@%@", @"dev.flutter.pigeon.google_maps_flutter_ios.MapsCallbackApi.onGroundOverlayTap", _messageChannelSuffix];
+  FlutterBasicMessageChannel *channel =
+    [FlutterBasicMessageChannel
+      messageChannelWithName:channelName
+      binaryMessenger:self.binaryMessenger
+      codec:FGMGetMessagesCodec()];
+  [channel sendMessage:@[arg_groundOverlayId ?: [NSNull null]] reply:^(NSArray<id> *reply) {
+    if (reply != nil) {
+      if (reply.count > 1) {
+        completion([FlutterError errorWithCode:reply[0] message:reply[1] details:reply[2]]);
+      } else {
+        completion(nil);
+      }
+    } else {
+      completion(createConnectionError(channelName));
+    } 
+  }];
+}
 - (void)didTapPolylineWithIdentifier:(NSString *)arg_polylineId completion:(void (^)(FlutterError *_Nullable))completion {
   NSString *channelName = [NSString stringWithFormat:@"%@%@", @"dev.flutter.pigeon.google_maps_flutter_ios.MapsCallbackApi.onPolylineTap", _messageChannelSuffix];
   FlutterBasicMessageChannel *channel =
